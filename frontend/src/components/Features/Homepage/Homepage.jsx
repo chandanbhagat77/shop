@@ -13,7 +13,7 @@ export default function Homepage() {
       <ProductListing />
       <CategoryList />
       <Offer />
-      <PresentSection />
+      {/* <PresentSection /> */}
       <ThinkingSection />
       <Banner />
     </>

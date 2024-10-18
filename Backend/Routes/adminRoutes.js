@@ -18,6 +18,10 @@ adminRouter.use(isLoggedIn, giveAccess("ADMIN"))
 adminRouter.post("/create", uploadImages, resizeImage, createProduct)
 adminRouter.patch("/edit/:productId", editProduct)
 adminRouter.post("/delete", deleteProduct)
+
+// to add category
+adminRouter.patch("/create")
+
 // add colors simillar product to product
 
 adminRouter.patch("/addColors", addOtherSimillarColorProduct)

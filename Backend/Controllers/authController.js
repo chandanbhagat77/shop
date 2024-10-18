@@ -288,8 +288,8 @@ exports.genrateOtpAndSend = catchAsync(async (req, res, next) => {
 
     const otp = generateOTP();
     const otpDoc = await Otp.create({
-        // otp: 123456,
-        otp: otp,
+        otp: 123456,
+        // otp: otp,
         validUntil: Date.now() + 1000 * 60 * 10
     })
 

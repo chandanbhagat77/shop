@@ -4,7 +4,7 @@ const client = redis.createClient({
     port: 6379
 });
 
-client.connect()
+// client.connect()
 client.on('connect', async () => {
     console.log('Connected to Redis...');
     try {
