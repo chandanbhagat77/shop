@@ -9,6 +9,7 @@ const Booked = require("../Models/BookedProduct");
 const Tool = require("../Models/Tools");
 const SimilarPrduct = require("../Models/SimilarProduct");
 const { saveCountAndClearCache } = require("../Redis/syncViewCounts");
+const BusinessCategory = require("../Models/BusinessCategory");
 
 
 
@@ -711,6 +712,42 @@ exports.deletTool = catchAsync(async (req, res, next) => {
     res.status(204).send({
         status: "success",
         msg: "operation performed successfully, delete tool "
+    })
+})
+
+
+exports.createBuisnessCategory = catchAsync(async (req, res, next) => {
+    const {  name } = req.body;
+
+    const category = await BusinessCategory.create({
+        name, 
+        coverImage: req.body?.coverImage || "", 
+    })
+
+
+    if (!category) {
+        return next(new appError("Try again , category not created", 400))
+    }
+
+    res.status(200).send({
+        status: "success",
+        msg: "category created succesfully"
+    })
+
+
+
+
+
+
+
+})
+
+exports.getAllBusinessList = catchAsync(async (req,res,next)=>{
+    const list=await BusinessCategory.find();
+
+    res.status(200).send({
+        status : "success",
+        list
     })
 })
 

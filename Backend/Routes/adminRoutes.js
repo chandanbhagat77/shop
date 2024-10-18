@@ -1,5 +1,5 @@
 const express = require('express');
-const { createProduct, uploadImages, resizeImage, editProduct, getAllOrdersForShipment, confirmShipemntForOrder, resizeToolImage, createCategory, updateCategory, updateSlider, getAllMyTools, actionOnTool, deletTool, addOtherSimillarColorProduct, deleteProduct } = require('../Controllers/adminController');
+const { createProduct, uploadImages, resizeImage, editProduct, getAllOrdersForShipment, confirmShipemntForOrder, resizeToolImage, createCategory, updateCategory, updateSlider, getAllMyTools, actionOnTool, deletTool, addOtherSimillarColorProduct, deleteProduct, createBuisnessCategory, getAllBusinessList } = require('../Controllers/adminController');
 const { isLoggedIn } = require('../Middleware/isLoggedIn');
 const giveAccess = require('../Middleware/giveAccessTo');
 const { getToolById, getToolByIdForMange } = require('../Controllers/toolControllers');
@@ -20,15 +20,16 @@ adminRouter.patch("/edit/:productId", editProduct)
 adminRouter.post("/delete", deleteProduct)
 
 // to add category
-adminRouter.patch("/create")
+adminRouter.post("/createBuisnessCategory",uploadImages, resizeToolImage,createBuisnessCategory)
 
 // add colors simillar product to product
 
 adminRouter.patch("/addColors", addOtherSimillarColorProduct)
 
 
-adminRouter.get("/getAllOrdersForShipment", getAllOrdersForShipment)
 adminRouter.get("/confirmShipment/:productId", confirmShipemntForOrder)
+adminRouter.get("/getAllOrdersForShipment", getAllOrdersForShipment)
+adminRouter.get("/getAllBusinessCategorysList", getAllBusinessList)
 
 // add and remove of pproduct from the category
 adminRouter.patch("/actionOnTool", actionOnTool)

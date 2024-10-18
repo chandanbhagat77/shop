@@ -12,6 +12,7 @@ const CreateProductForm = () => {
   const { categoryName } = useSelector((state) => state.product);
 
   let [store, setStore] = useState([]);
+  let [businessCategory,setBusinessCategory]=useState([])
   const [product, setProduct] = useState({
     name: "",
     price: 1000,
@@ -50,7 +51,7 @@ const CreateProductForm = () => {
     "White",
     "Yellow",
     "Purple",
-    "Orange",
+    "Orange", 
     "Brown",
     "Gray",
   ];
@@ -212,15 +213,24 @@ const CreateProductForm = () => {
   useEffect(() => {
     async function getstockPlace() {
       try {
-        const wherhouseDetails = await axios.get(
-          "/api/v1/ship/getAllWarehouseDetails"
+        // const wherhouseDetails = await axios.get(
+        //   "/api/v1/ship/getAllWarehouseDetails"
+        // );
+        const getBusinessCategory = await axios.get(
+          "/api/v1/admin/getAllBusinessCategorysList"
         );
-        let wd = wherhouseDetails.data.warehouse.map((el) => {
-          let obj = { name: el.warehouse_name, id: el.location_id };
-          return obj;
-        });
-        setStore(wd);
+
+        // let wd = wherhouseDetails.data.warehouse.map((el) => {
+        //   let obj = { name: el.warehouse_name, id: el.location_id };
+        //   return obj;
+        // });
+        console.log(getBusinessCategory);
+        
+        setBusinessCategory([...getBusinessCategory.data.list])
+        // setStore(wd);
       } catch (e) {
+        console.log(e);
+        
         return dispatch(
           error({
             message: "somwthing went wrong in fetching wherehouse details",
@@ -250,15 +260,19 @@ const CreateProductForm = () => {
 
         {/* Select Gender */}
         <div className="flex justify-center space-x-3 items-center p-1">
-          <label className="title font-bold text-lg">Select Gender First</label>
+          <label className="title font-bold text-lg">Select Business category </label>
           <select
             className="rounded-lg border-2 border-indigo-500 focus:ring-2 focus:ring-purple-600 p-2"
             onChange={(e) => setProduct({ ...product, gender: e.target.value })}
           >
             <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
+            {
+              businessCategory.length > 0 && businessCategory.map((el,i)=>{
+
+                return <option value={el._id}>{el.name}</option>
+              })
+            }
+            </select>
         </div>
 
         <form onSubmit={handleSubmit} className="py-8 p-1 lg:px-8 space-y-6">

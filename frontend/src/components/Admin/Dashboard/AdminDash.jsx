@@ -15,6 +15,7 @@ import ManageTools from "./../Tools/ManageTools";
 import CreateCategory from "./../Tools/CreateCatefory";
 import ProductData from "./ProductData";
 import Main from "../OrderCRUD/Main";
+import CreateBusinessCategory from "../Tools/CreateBusinessCategory";
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -37,8 +38,8 @@ const AdminPanel = () => {
     { id: "orders", label: "Orders", icon: <FaClipboardList /> },
     { id: "analytics", label: "Analytics", icon: <FaChartLine /> },
     { id: "tools", label: "Tools", icon: <FaTools /> },
-    { id: "manage-tools", label: "Manage Tools", icon: <FaCogs /> },
-    { id: "reports", label: "Reports", icon: <FaFileAlt /> },
+    { id: "manage-tools", label: "Manage Tools", icon: <FaCogs /> }, 
+    { id: "businessCategory", label: "Category", icon: <FaTools /> },
     { id: "help", label: "Help", icon: <FaQuestionCircle /> },
   ];
 
@@ -52,6 +53,8 @@ const AdminPanel = () => {
         return <Main />;
       case "tools":
         return <CreateCategory />;
+        case "businessCategory":
+        return <CreateBusinessCategory />;
       case "manage-tools":
         return <ManageTools />;
       default:

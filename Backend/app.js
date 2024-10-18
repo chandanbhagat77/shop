@@ -20,7 +20,7 @@ const paymentRouter = require('./Routes/paymentsRoute');
 const userrouter = require('./Routes/userRouter');
 const toolRouter = require('./Routes/toolsRouter');
 
-// const { syncViewCounts } = require('./Redis/syncViewCounts');
+const { syncViewCounts } = require('./Redis/syncViewCounts');
 const shipRouter = require('./Routes/shipRoutes');
 const orderRoutes = require('./Routes/orderRoutes');
 
@@ -154,7 +154,7 @@ app.use(globalErrorHandler)
 
 
 
-// syncViewCounts();
+syncViewCounts();
 
 
 

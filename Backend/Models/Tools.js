@@ -1,4 +1,5 @@
 
+
 const mongoose = require('mongoose');
 
 const toolSchema = new mongoose.Schema(({
@@ -24,9 +25,10 @@ const toolSchema = new mongoose.Schema(({
     coverImage: {
         type: String
     },
-    gender: {
-        type: String,
-        required: [true, "must provide gender"]
+    businessCategory: {
+        type: mongoose.mongo.ObjectId,
+        ref : "BusinessCategory",
+        required: [true, "must provide category"]
     },
     images: {
         type: [String]
