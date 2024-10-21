@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import ProductCard from "../Common/Cards/ProductCard";
 
-const ProductListing = () => {
+const ProductListing = ({productId}) => {
   const navigate = useNavigate();
   const { gender } = useSelector((state) => state.auth);
   const [products, setProducts] = useState([]);
@@ -21,7 +21,7 @@ const ProductListing = () => {
       setIsLoading(true);
       try {
         const res = await axios.get(
-          `/api/v1/product/getAllTrendingProducts?gender=${gender}&populate=products&populateField=gender,name,price,_id,coverImage&populateLimit=4&populatPage=${page}`
+          `/api/v1/product/getAllTrendingProducts/${productId}?populate=products&populateField=name,price,_id,coverImage&populateLimit=4&populatPage=${page}`
         );
 
         if (res.data.products == 0) {

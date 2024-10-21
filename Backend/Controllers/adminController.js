@@ -756,7 +756,7 @@ exports.createBuisnessCategory = catchAsync(async (req, res, next) => {
 })
 
 exports.getAllBusinessList = catchAsync(async (req,res,next)=>{
-    const list=await BusinessCategory.find();
+    const list=await BusinessCategory.find({},"-products -__v");
 
     res.status(200).send({
         status : "success",

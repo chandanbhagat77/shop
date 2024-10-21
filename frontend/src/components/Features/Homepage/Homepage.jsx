@@ -6,19 +6,18 @@ import Slider from "./Slider";
 import Banner from "./Banner";
 import Offer from "./Offer";
 import BusinessCategoryList from "./BusinessCategoryList";
+import EverythingBox from "./EverythingBox";
 
 export default function Homepage() {
   return (
     <>
-      {/* <Slider />
-      <ProductListing />
-      <CategoryList />
-      <Offer /> */}
+      
       {/* <PresentSection /> */}
       {/* <ThinkingSection />
       <Banner /> */}
       <BusinessCategoryList/>
       <Slider/>
+      <EverythingBox/>
     </>
   );
 }

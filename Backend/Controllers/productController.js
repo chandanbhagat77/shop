@@ -7,6 +7,7 @@ const catchAsync = require("../utils/catchAsync");
 const redisClient = require('../Redis/redisClient');
 const Apifeature = require("../utils/apiFeatures");
 const createCache = require("../Redis/createCache");
+const BusinessCategory = require("../Models/BusinessCategory");
 
 exports.getAllProduct = catchAsync(async (req, res, next) => {
     const product = await Product.find({
@@ -214,14 +215,15 @@ exports.getTrending = catchAsync(async (req, res, next) => {
 
 
 
-    const features = new Apifeature(Tool.find({ name: "Trending" }), req.query).populate().filter().sort().fields().pagination();
+    const features = new Apifeature(BusinessCategory.find({ _id: req.params.productId }), req.query).populate().filter().sort().fields().pagination();
 
 
     const products = await features.query;
+    // console.log(req.params.productId,products);
+    
 
     await createCache(req, {
-        status: "success",
-        id: products[0]?._id,
+        status: "success", 
         products: products[0]?.products
     })
 

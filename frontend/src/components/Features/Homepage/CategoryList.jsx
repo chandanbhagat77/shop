@@ -16,7 +16,7 @@ const CategoryList = () => {
     async function getData() {
       try {
         const res = await axios.get(
-          `/api/v1/tools/getTool/CATEGORY?gender=${gender}&page=${page}&limit=8&fields=name,label,coverImage,_id`
+          `/api/v1/tools/getTool/CATEGORY?&page=${page}&limit=4&fields=name,label,coverImage,_id`
         );
 
         if (res.data.products === 0) {
@@ -33,18 +33,7 @@ const CategoryList = () => {
 
   return (
     <div className="min-h-screen py-12 p-2 lg:px-4 bg-white flex flex-col justify-center items-center space-y-10 lg:space-y-16 pb-20">
-      {/* Title Section */}
-      <div className="text-center mt-10 mb-5">
-        <h2 className="text-4xl font-bold text-gray-800 tracking-wide mb-2">
-          Discover Your Style
-        </h2>
-        <h3 className="text-2xl font-semibold text-gray-600">
-          Find What Complements You
-        </h3>
-        <div className="mt-4">
-          <span className="inline-block w-24 h-1 bg-gradient-to-r from-gray-700 to-gray-400 rounded"></span>
-        </div>
-      </div>
+     
 
       {/* Category Grid */}
       <div className="relative w-full max-w-screen-xl">
