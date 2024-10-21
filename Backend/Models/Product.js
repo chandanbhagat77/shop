@@ -26,10 +26,7 @@ const productSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    sizes: {
-        type: [Object],
-        required: true,
-    },
+   
     colors: {
         type: mongoose.mongo.ObjectId,
         ref: "SimilarProduct"
@@ -115,10 +112,7 @@ const productSchema = new mongoose.Schema({
     offer: {
         type: Object,
     },
-    gender: {
-        type: String,
-        required: [true, "Please tell this product is for which gender "]
-    },
+   
     viewCount: { type: Number, default: 0 },
     dimension: {
         type: Array

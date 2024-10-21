@@ -5,17 +5,19 @@ import PresentSection from "./PresentSection";
 import Slider from "./Slider";
 import Banner from "./Banner";
 import Offer from "./Offer";
+import BusinessCategoryList from "./BusinessCategoryList";
 
 export default function Homepage() {
   return (
     <>
-      <Slider />
+      {/* <Slider />
       <ProductListing />
       <CategoryList />
-      <Offer />
+      <Offer /> */}
       {/* <PresentSection /> */}
-      <ThinkingSection />
-      <Banner />
+      {/* <ThinkingSection />
+      <Banner /> */}
+      <BusinessCategoryList/>
     </>
   );
 }

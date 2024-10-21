@@ -28,21 +28,14 @@ const CreateProductForm = () => {
     category: [],
     colorCategory: "",
     careInstructions: "",
-    gender: "",
+   
     stock: 20,
     dimension: [0, 0, 0],
     stockPlace: 0,
     weight: 0,
   });
 
-  const sizeOptions = [
-    { size: "XS", price: 0 },
-    { size: "S", price: 0 },
-    { size: "M", price: 0 },
-    { size: "L", price: 0 },
-    { size: "XL", price: 0 },
-    { size: "XXL", price: 0 },
-  ];
+   
   const colorCategoryOptions = [
     "Red",
     "Blue",
@@ -79,7 +72,7 @@ const CreateProductForm = () => {
           price: 1000,
           shortDescription: p.shortDescription,
           longDescription: p.longDescription,
-          sizes: [],
+        
           material: p.material,
           images: [],
           coverImage: null,
@@ -89,7 +82,7 @@ const CreateProductForm = () => {
           category: [],
           colorCategory: "",
           careInstructions: p.careInstructions,
-          gender: p.gender,
+        
           stock: 20,
           stockPlace: p.stockPlace,
           weight: p.weight,
@@ -175,9 +168,7 @@ const CreateProductForm = () => {
           product.features.map((el) => {
             fd.append("features", el);
           });
-        } else if (key == "sizes") {
-          fd.append("sizes", JSON.stringify(product.sizes));
-        } else if (key == "category") {
+        }  else if (key == "category") {
           fd.append("category", JSON.stringify(product.category));
         } else {
           fd.append(`${key}`, product[key]);
@@ -202,13 +193,9 @@ const CreateProductForm = () => {
       );
     }
   };
-  async function getCategory() {
-    await dispatch(getAllCateogyNames(product.gender));
-  }
+  
 
-  useEffect(() => {
-    product.gender.length > 0 ? getCategory() : "";
-  }, [product.gender]);
+ 
 
   useEffect(() => {
     async function getstockPlace() {
@@ -352,35 +339,7 @@ const CreateProductForm = () => {
             ></textarea>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Sizes and Prices
-            </label>
-            <div className="mt-2 space-y-2">
-              {sizeOptions.map((size) => (
-                <div key={size.size} className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={product?.sizes.find(
-                      (item) => item.size === size.size
-                    )}
-                    onChange={() => handleSizeChange(size)}
-                    className="form-checkbox h-5 w-5 text-indigo-600"
-                  />
-                  <span className="text-gray-700">{size.size}</span>
-
-                  {product.sizes.find((item) => item.size == size.size) && (
-                    <input
-                      type="number"
-                      placeholder={`No of avai.. pices ${size.size}`}
-                      className="mt-1 block w-32 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      onChange={(e) => handleSizeChange(size, e.target.value)}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
+         
 
           <div>
             <label

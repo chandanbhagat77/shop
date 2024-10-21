@@ -19,27 +19,7 @@ const NavbarActions = ({}) => {
 
   return (
     <div className="flex items-center space-x-4 text-sm">
-      {/* Gender Toggle Switch */}
-      <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-lg">
-        <span className={`text-blue-600 ${!isToggled ? "font-bold" : ""}`}>
-          {!isToggled ? "Male" : "M"}
-        </span>
-        <button
-          onClick={handleGenderToggle}
-          className={`w-12 h-6 flex items-center rounded-full p-1 duration-300 ease-in-out ${
-            isToggled ? "bg-pink-600" : "bg-blue-600"
-          }`}
-        >
-          <div
-            className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out ${
-              isToggled ? "translate-x-6" : ""
-            }`}
-          ></div>
-        </button>
-        <span className={`text-pink-600 ${isToggled ? "font-bold" : ""}`}>
-          {isToggled ? "Female" : "F"}
-        </span>
-      </div>
+      
 
       {/* User Profile/Login Button */}
       {isLoggedIn ? (

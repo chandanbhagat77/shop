@@ -57,7 +57,7 @@ exports.resizeToolImage = catchAsync(async (req, res, next) => {
 
     if (req.files.coverImage) {
 
-        req.body.coverImage = `toolCover-${req.body.label}-${Date.now()}.jpeg`
+        req.body.coverImage = `toolCover-${req.body.label|| req.body?.name}-${Date.now()}.jpeg`
         await sharp(req.files.coverImage[0].buffer).toFormat('jpeg').toFile(`./Public/Tools/${req.body.coverImage}`)
         next()
         return
@@ -65,7 +65,7 @@ exports.resizeToolImage = catchAsync(async (req, res, next) => {
     if (req.files.images) {
         req.body.Images = []
         await Promise.all(req.files.images.map(async (el, i) => {
-            const fileName = `toolCover${req.body.label}-${Math.random()}-${i}.jpeg`
+            const fileName = `toolCover${req.body?.label}-${Math.random()}-${i}.jpeg`
             await sharp(el.buffer).toFormat('jpeg').toFile(`./Public/Tools/${fileName}`)
             req.body.Images.push(fileName);
         }))
@@ -103,8 +103,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
         name,
         price,
         shortDescription,
-        longDescription,
-        sizes,
+        longDescription, 
         material,
         Images,
         coverImage,
@@ -115,9 +114,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
         category,
         colorCategory,
         careInstructions,
-        stock,
-        brand,
-        gender,
+        stock,  
         stockPlace,
         weight,
         dimension
@@ -129,8 +126,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
         name,
         price,
         shortDescription,
-        longDescription,
-        sizes: JSON.parse(sizes),
+        longDescription, 
         material,
         images: Images,
         coverImage,
@@ -141,9 +137,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
         category: c,
         colorCategory,
         careInstructions,
-        stock,
-        brand,
-        gender,
+        stock, 
         stockPlace,
         weight,
         dimension
