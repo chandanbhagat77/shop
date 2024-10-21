@@ -18,6 +18,7 @@ export default function Homepage() {
       {/* <ThinkingSection />
       <Banner /> */}
       <BusinessCategoryList/>
+      <Slider/>
     </>
   );
 }

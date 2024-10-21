@@ -12,6 +12,7 @@ import BulkListLayoutProduct from "../Features/BulkList/BulkListLayoutProduct";
 import BulkListLayoutCard from "../Features/BulkList/BulkListLayoutCard";
 import Product from "../Features/ProductDetails/Product";
 import ProfileOut from "../Features/Profile/ProfileMainBox";
+import BulkListLayoutCategory from "../Features/BulkList/BulkListLayoutCategory";
 
 export default function AppRoutes() {
   return (
@@ -62,6 +63,18 @@ export default function AppRoutes() {
             <MainLayout>
               <div className="">
                 <BulkListLayoutCard />
+              </div>
+            </MainLayout>
+          }
+        />
+
+        
+<Route
+          path="/businesscategoryLists/:tool"
+          element={
+            <MainLayout>
+              <div className="">
+                <BulkListLayoutCategory />
               </div>
             </MainLayout>
           }

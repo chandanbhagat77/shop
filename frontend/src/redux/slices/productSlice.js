@@ -64,11 +64,11 @@ export const removeFromHeart = createAsyncThunk("/product/remove/heart", async (
 
 
 
-export const getAllCateogyNames = createAsyncThunk("/product/getCategory", async (gender) => {
+export const getAllCateogyNames = createAsyncThunk("/product/getCategory", async (businessId) => {
     try {
 
 
-        const res = await axios.get(`/api/v1/product/getAllCategory?fields=name,_id,label&gender=${gender}`);
+        const res = await axios.get(`/api/v1/product/getAllCategory?fields=name,_id,label&businessCategory=${businessId}`);
 
         return res.data
     } catch (e) {

@@ -41,7 +41,7 @@ const ProductSearch = ({ setSelectedProduct }) => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-8 px-2 lg:p-8 bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-2xl">
+    <div className="max-w-3xl mx-auto mt-8 px-2 lg:p-8 bg-white rounded-xl shadow-2xl">
       <div className="relative mb-6">
         <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
         <input

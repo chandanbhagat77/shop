@@ -12,6 +12,8 @@ const CreateProductForm = () => {
   const { categoryName } = useSelector((state) => state.product);
 
   let [store, setStore] = useState([]);
+  let [selectedValue, setSelectedValue] = useState("");
+
   let [businessCategory,setBusinessCategory]=useState([])
   const [product, setProduct] = useState({
     name: "",
@@ -107,23 +109,7 @@ const CreateProductForm = () => {
       : [...product.category, item];
     setProduct({ ...product, category: category });
   };
-  const handleSizeChange = (size, price = 0) => {
-    if (!price) {
-      const newSizes = product.sizes.find((item) => item.size === size.size)
-        ? product.sizes.filter((item) => item.size !== size.size)
-        : [...product.sizes, size];
-      setProduct({ ...product, sizes: newSizes });
-    } else {
-      const newproduct = product.sizes.map((el) => {
-        if (el.size == size.size) {
-          el.price = price;
-        }
-        return el;
-      });
-
-      setProduct({ ...product, sizes: newproduct });
-    }
-  };
+ 
 
   const handleFeatureChange = (index, value) => {
     const newFeatures = [...product.features];
@@ -175,6 +161,7 @@ const CreateProductForm = () => {
         }
       }
 
+      fd.append("businessCategoryId", selectedValue);
       const res = await axios.post("/api/v1/admin/create", fd);
 
       if (res.data.status == "success") {
@@ -193,9 +180,14 @@ const CreateProductForm = () => {
       );
     }
   };
-  
 
- 
+
+  async function getCategory() {
+    await dispatch(getAllCateogyNames(selectedValue));
+  }
+  useEffect(()=>{
+    selectedValue && getCategory()
+  },[selectedValue])
 
   useEffect(() => {
     async function getstockPlace() {
@@ -250,7 +242,7 @@ const CreateProductForm = () => {
           <label className="title font-bold text-lg">Select Business category </label>
           <select
             className="rounded-lg border-2 border-indigo-500 focus:ring-2 focus:ring-purple-600 p-2"
-            onChange={(e) => setProduct({ ...product, gender: e.target.value })}
+            onChange={(e) => setSelectedValue(e.target.value) }
           >
             <option value="">Select</option>
             {
@@ -262,7 +254,7 @@ const CreateProductForm = () => {
             </select>
         </div>
 
-        <form onSubmit={handleSubmit} className="py-8 p-1 lg:px-8 space-y-6">
+    {   selectedValue &&  <form onSubmit={handleSubmit} className="py-8 p-1 lg:px-8 space-y-6">
           <div className="grid grid-cols-1 gap-1 lg:gap-6 sm:grid-cols-2">
             <div>
               <label
@@ -639,7 +631,7 @@ const CreateProductForm = () => {
               </button>
             </div>
           </div>
-        </form>
+        </form>}
       </div>
     </>
   );

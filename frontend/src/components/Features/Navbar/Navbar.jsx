@@ -121,7 +121,7 @@ const Navbar = () => {
             {" "}
             <NavbarActions />
           </div>
-          <div className="p-4 border-b border-gray-200">
+          <div className="p-4 ">
             <SearchCategoryProductAndItem />
           </div>
 

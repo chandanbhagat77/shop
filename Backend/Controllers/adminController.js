@@ -10,6 +10,7 @@ const Tool = require("../Models/Tools");
 const SimilarPrduct = require("../Models/SimilarProduct");
 const { saveCountAndClearCache } = require("../Redis/syncViewCounts");
 const BusinessCategory = require("../Models/BusinessCategory");
+const Apifeature = require("../utils/apiFeatures");
 
 
 
@@ -117,7 +118,8 @@ exports.createProduct = catchAsync(async (req, res, next) => {
         stock,  
         stockPlace,
         weight,
-        dimension
+        dimension,
+        businessCategoryId
     } = req.body;
     let c = JSON.parse(category);
     // adding into the category
@@ -155,6 +157,9 @@ exports.createProduct = catchAsync(async (req, res, next) => {
     }
 
     const tool = await Tool.updateMany(filter, update)
+    const businessCategory = await BusinessCategory.findByIdAndUpdate(businessCategoryId,{
+        $push : {products : product._id}
+    })
 
     await saveCountAndClearCache()
 
@@ -453,16 +458,25 @@ exports.confirmShipemntForOrder = catchAsync(async (req, res, next) => {
 
 
 exports.createCategory = catchAsync(async (req, res, next) => {
-    const { label, shortDescription, name, gender } = req.body;
+    const { label, shortDescription, name,businessCategory } = req.body;
 
-    const category = await Tool.create({
-        name,
-        label,
-        coverImage: req.body?.coverImage || "",
-        shortDescription,
-        gender,
-        images: req.body?.Images || []
-    })
+    let category;
+    if (businessCategory) {
+        category = await Tool.create({
+            name,
+            label,
+            coverImage: req.body?.coverImage || "",
+            shortDescription,
+            businessCategory:businessCategory
+        })
+    } else{
+        category = await Tool.create({
+            name,
+            label,
+            coverImage: req.body?.coverImage || "",
+            shortDescription, 
+        })
+    }
 
 
     if (!category) {
@@ -561,8 +575,13 @@ exports.updateSlider = catchAsync(async (req, res, next) => {
 
 
 exports.getAllMyTools = catchAsync(async (req, res, next) => {
-    const { gender } = req.params;
-    const allToolsdata = await Tool.find({ name: { $ne: "HOTPRODUCTS" }, gender: gender }, "-products -__v")
+  
+    // const allToolsdata = await Tool.find({}, "-products -__v")
+    const features = new Apifeature(Tool.find({  }), req.query).populate().filter().sort().fields().pagination();
+
+
+
+    const allToolsdata = await features.query;
 
     res.status(200).send({
         status: "success",

@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const toolSchema = new mongoose.Schema(({
     name: {
         type: String,
-
         required: [true, "must provide type of tool you are creating"]
     },
     products: {
@@ -28,11 +27,9 @@ const toolSchema = new mongoose.Schema(({
     businessCategory: {
         type: mongoose.mongo.ObjectId,
         ref : "BusinessCategory",
-        required: [true, "must provide category"]
+      
     },
-    images: {
-        type: [String]
-    }
+   
 }))
 
 const Tool = mongoose.model("Tool", toolSchema)

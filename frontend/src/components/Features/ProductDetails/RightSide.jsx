@@ -89,7 +89,7 @@ export default function RightSide({ product }) {
 
         <div className="mb-4">
           <h2 className="font-semibold mb-2">Size</h2>
-          <div className="flex space-x-2">
+          {/* <div className="flex space-x-2">
             {product.sizes.map((size) => (
               <button
                 key={size.size}
@@ -100,7 +100,7 @@ export default function RightSide({ product }) {
                 </span>
               </button>
             ))}
-          </div>
+          </div> */}
         </div>
 
         <div className="flex flex-col space-y-2 mb-4">

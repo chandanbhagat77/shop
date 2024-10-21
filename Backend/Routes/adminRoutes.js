@@ -9,7 +9,7 @@ const adminRouter = express.Router()
 
 
 
-adminRouter.get("/getAllMyTools/:gender", getAllMyTools)
+adminRouter.get("/getAllMyTools", getAllMyTools)
 adminRouter.get("/getToolById/:toolId", getToolById)
 
 

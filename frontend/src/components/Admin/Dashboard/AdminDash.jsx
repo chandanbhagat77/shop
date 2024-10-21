@@ -52,7 +52,7 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-white">
       {/* Sidebar */}
       <aside
         className={`bg-white shadow-lg w-64 p-4 transition-transform duration-300 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 `}
@@ -77,7 +77,7 @@ const AdminPanel = () => {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 p-1 ">
+      <div className="flex-1 p-1 py-10">
         <button
           className="md:hidden mb-4 p-2 bg-blue-600 text-white rounded-lg"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

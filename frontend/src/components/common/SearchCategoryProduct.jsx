@@ -80,14 +80,14 @@ const SearchCategoryProduct = ({ addToSelected, nonevigate = false }) => {
   return (
     <div className="relative w-full max-w-2xl mx-auto" ref={searchRef}>
       <div className="relative">
-        <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
+        <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 " />
         <input
           type="text"
           placeholder="Search for premium products..."
           value={searchTerm}
           onChange={handleSearchChange}
           onFocus={() => setIsOpen(true)}
-          className="w-full pl-12 pr-12 py-3 text-lg text-gray-800 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg transition duration-300 ease-in-out"
+          className="w-full pl-12 pr-12 py-2  text-gray-800 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500  transition duration-300 ease-in-out ring-1 ring-gray-200"
         />
         {searchTerm && (
           <button

@@ -1,25 +1,21 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiUpload, FiType, FiAlignLeft, FiX } from "react-icons/fi";
 import { useDispatch } from "react-redux";
-import { error, success } from "../../../redux/slices/errorSlice";
+import { error, success, warning } from "../../../redux/slices/errorSlice";
 
 const CreateCategory = () => {
   const [coverImage, setCoverImage] = useState(null);
   const dispatch = useDispatch();
-  const [label, setLabel] = useState("");
-  const [custom, setCustom] = useState("");
-  const [image, setImage] = useState("");
+  const [label, setLabel] = useState(""); 
   const [shortDescription, setShortDescription] = useState("");
-  const [gender, setGender] = useState("");
-  const [selectedValue, setSelectedValue] = useState("");
-  const [images, setImages] = useState([]);
+  
+  let [businessCategory,setBusinessCategory]=useState([])
+  const [selectedValue, setSelectedValue] = useState(""); 
+  const [selectedValue1, setSelectedValue1] = useState(""); 
+  const [image, setImage] = useState([]);
 
-  const removeImage = (index) => {
-    const newImages = [...images];
-    newImages.splice(index, 1);
-    setImages([...newImages]);
-  };
+  
 
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
@@ -27,28 +23,35 @@ const CreateCategory = () => {
       setCoverImage(URL.createObjectURL(e.target.files[0]));
     }
   };
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    setImages([...images, ...files]);
-  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+
+      if (!image || !label || !shortDescription) {
+        
+        dispatch(warning({ message:"please fill all the fields"}));
+        return 
+      }
+      if (selectedValue == "CATEGORY" && !selectedValue1) {
+        dispatch(warning({ message:"please fill all the fields"}));
+        return 
+      }
+
       const fd = new FormData();
       fd.append("coverImage", image);
-      fd.append("name", custom ? custom : selectedValue);
+      fd.append("name",  selectedValue);
       fd.append("label", label);
-      fd.append("shortDescription", shortDescription);
-      fd.append("gender", gender);
-      selectedValue == "SERIES" &&
-        images.map((el) => {
-          fd.append("images", el);
-        });
+      fd.append("shortDescription", shortDescription); 
+      fd.append("businessCategory", selectedValue1 || ""); 
+      
       const data = await axios.post("/api/v1/admin/createCategory", fd);
 
       dispatch(success({ message: data.data.msg || "something went wrong" }));
     } catch (e) {
+      console.log(e);
+      
       dispatch(
         error({
           message:
@@ -63,13 +66,27 @@ const CreateCategory = () => {
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
+  async function getAllCategory(){
+    const getBusinessCategory = await axios.get(
+      "/api/v1/admin/getAllBusinessCategorysList"
+    );
+
+    
+    console.log(getBusinessCategory);
+    
+    setBusinessCategory([...getBusinessCategory.data.list])
+  }
+
+  useEffect(()=>{
+    getAllCategory()
+  },[])
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-10 bg-white rounded-2xl shadow-2xl">
+    <div className="max-w-2xl mx-auto py-20  px-10  bg-white rounded-2xl shadow-2xl">
       <div className="mb-6">
         <h2 className="text-4xl font-bold text-gray-900">Category Form</h2>
         <p className="text-sm text-gray-500">
-          Create category, add slider, cards, posters
+          Create category, add slider
         </p>
       </div>
 
@@ -78,56 +95,29 @@ const CreateCategory = () => {
         <div>
           <label
             htmlFor="categories"
-            className="block text-lg font-medium text-gray-800"
+            className="block  text-gray-800"
           >
-            Choose a category
+            Choose a category 
+            <span className="text-red-400 font-bold"><sup>*</sup></span>
           </label>
           <select
             id="categories"
             value={selectedValue}
             onChange={handleChange}
-            className="mt-2 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-600 focus:border-indigo-600 rounded-lg"
+            className="mt-2 block w-full pl-3 pr-10 py-2 text-base  border-black border-1 border focus:ring-indigo-600 focus:border-indigo-600 rounded-lg"
           >
             <option value="">Select an option</option>
             <option value="SLIDER">SLIDER</option>
-            <option value="CATEGORY">CATEGORY</option>
-            <option value="POSTER">POSTER</option>
-            <option value="SERIES">SERIES</option>
-            <option value="OFFER">OFFER</option>
-            <option value="custom">Custom</option>
+            <option value="CATEGORY">CATEGORY</option> 
           </select>
         </div>
 
-        {/* Custom Name */}
-        {selectedValue === "custom" && (
+         
+ 
           <div>
-            <label
-              htmlFor="custom"
-              className="block text-lg font-medium text-gray-800"
-            >
-              Custom Name
-            </label>
-            <div className="mt-2 relative rounded-lg shadow-sm">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FiType className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                id="custom"
-                className="focus:ring-indigo-600 focus:border-indigo-600 block w-full pl-10 py-2 sm:text-base border-gray-300 rounded-lg"
-                placeholder="Enter custom name"
-                value={custom}
-                onChange={(e) => setCustom(e.target.value)}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Cover Image */}
-        {selectedValue != "OFFER" ? (
-          <div>
-            <label className="block text-lg font-medium text-gray-800 mb-2">
+            <label className="block font-medium text-gray-800 mb-2">
               Cover Image
+              <span className="text-red-400 font-bold"><sup>*</sup></span>
             </label>
             <div className="mt-1 flex justify-center items-center px-6 py-5 border-2 border-dashed rounded-lg transition-all duration-150 hover:border-indigo-600">
               <div className="text-center">
@@ -162,63 +152,16 @@ const CreateCategory = () => {
               </div>
             </div>
           </div>
-        ) : (
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Images
-            </label>
-            <div className="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-              <div className="space-y-1 text-center">
-                <FiUpload className="mx-auto h-12 w-12 text-gray-400" />
-                <div className="flex text-sm text-gray-600">
-                  <label
-                    htmlFor="images"
-                    className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                  >
-                    <span>Upload images</span>
-                    <input
-                      id="images"
-                      name="images"
-                      type="file"
-                      className="sr-only"
-                      multiple
-                      onChange={handleImageUpload}
-                    />
-                  </label>
-                </div>
-                <p className="text-xs text-gray-500">
-                  PNG, JPG, GIF up to 10MB
-                </p>
-              </div>
-            </div>
-            <div className="mt-4 grid grid-cols-3 gap-4">
-              {images.map((image, index) => (
-                <div key={index} className="relative">
-                  <img
-                    src={URL.createObjectURL(image)}
-                    alt={`Product ${index + 1}`}
-                    className="h-24 w-24 object-cover rounded-md"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(index)}
-                    className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
-                  >
-                    <FiX className="h-4 w-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+       
 
         {/* Label */}
         <div>
           <label
             htmlFor="label"
-            className="block text-lg font-medium text-gray-800 mb-2"
+            className="block font-medium text-gray-800 mb-2"
           >
             Label / Title
+            <span className="text-red-400 font-bold"><sup>*</sup></span>
           </label>
           <div className="relative rounded-lg shadow-sm">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -236,55 +179,36 @@ const CreateCategory = () => {
         </div>
 
         {/* Gender (Radio Button) */}
-        <div>
-          <label className="block text-lg font-medium text-gray-800 mb-2">
-            Gender
-          </label>
-          <div className="mt-2 space-y-4">
-            <div className="flex items-center">
-              <input
-                id="male"
-                name="gender"
-                type="radio"
-                value="male"
-                checked={gender === "male"}
-                onChange={(e) => setGender(e.target.value)}
-                className="focus:ring-indigo-600 h-4 w-4 text-indigo-600 border-gray-300"
-              />
-              <label
-                htmlFor="male"
-                className="ml-3 block text-base text-gray-800"
-              >
-                Male
-              </label>
-            </div>
-            <div className="flex items-center">
-              <input
-                id="female"
-                name="gender"
-                type="radio"
-                value="female"
-                checked={gender === "female"}
-                onChange={(e) => setGender(e.target.value)}
-                className="focus:ring-indigo-600 h-4 w-4 text-indigo-600 border-gray-300"
-              />
-              <label
-                htmlFor="female"
-                className="ml-3 block text-base text-gray-800"
-              >
-                Female
-              </label>
-            </div>
-          </div>
-        </div>
+        {
+       selectedValue == "CATEGORY" && 
+       <>
+         <div>
+         <label className="title ">Select Business category </label>
+         <span className="text-red-400 font-bold"><sup>*</sup></span>
+         </div>
+           <select
+          className="rounded-lg border-2 border-indigo-500 focus:ring-2 focus:ring-purple-600 p-2 w-full"
+          onChange={(e) => setSelectedValue1(e.target.value)}
+        >
+          <option value="" >Select</option>
+          {
+            businessCategory.length > 0 && businessCategory.map((el,i)=>{
+
+              return <option value={el._id} >{el.name}</option>
+            })
+          }
+          </select>
+       </>
+        }
+     
 
         {/* Short Description */}
         <div>
           <label
             htmlFor="short-description"
-            className="block text-lg font-medium text-gray-800 mb-2"
+            className="block  font-medium text-gray-800 mb-2"
           >
-            Short Description
+            Short Description  <span className="text-red-400 font-bold"><sup>*</sup></span>
           </label>
           <div className="relative rounded-lg shadow-sm">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

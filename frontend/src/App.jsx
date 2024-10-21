@@ -6,8 +6,7 @@ function App() {
   return (
     <>
       <AlertBox />
-      <AppRoutes />
-      {/* <ProductOverview /> */}
+      <AppRoutes /> 
     </>
   );
 }

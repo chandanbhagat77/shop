@@ -10,78 +10,105 @@ import FullScreenDialog from "../../common/FullScreenDialog";
 import ToolProductAction from "./ToolProductAction";
 import url from "../../../assets/url";
 import ChangeOrder from "./ChangeOrder";
+import { getAllCateogyNames } from "../../../redux/slices/productSlice";
 
 export default function ManageTools() {
-  const dispatch = useDispatch();
-  const [gender, setGender] = useState("male");
+  const dispatch = useDispatch(); 
   const [tools, setTools] = useState({
     sliders: [],
-    category: [],
-    posters: [],
-    cards: [],
-    offer: [],
+    category: [], 
   });
 
+
+  let [selectedValue, setSelectedValue] = useState("");
+  let [businessCategory,setBusinessCategory]=useState([])
   async function getAllTools() {
     try {
-      const res = await axios.get(`/api/v1/admin/getAllMyTools/${gender}`);
+      const res = await axios.get(`/api/v1/admin/getAllMyTools?name=SLIDER`);
       const data = res.data.allToolsdata;
       let sliders = [],
-        category = [],
-        posters = [],
-        cards = [],
-        custom = [],
-        offer = [];
+        category = [];
 
       data.forEach((el) => {
-        if (el.name === "SLIDER") sliders.push(el);
-        else if (el.name === "CATEGORY") category.push(el);
-        else if (el.name === "CARDS") cards.push(el);
-        else if (el.name === "POSTER") posters.push(el);
-        else if (el.name === "OFFER") offer.push(el);
-        else custom.push(el);
+        if (el.name === "SLIDER") sliders.push(el); 
+        // else custom.push(el);
       });
 
-      setTools({ sliders, category, posters, cards, offer, custom });
+      setTools({ sliders,category });
     } catch (e) {
+      console.log(e);
+      
       dispatch(
         error({ message: e?.response?.data?.msg || "Something went wrong" })
       );
     }
   }
 
+  async function getCategory() {
+    const res = await axios.get(`/api/v1/admin/getAllMyTools?businessCategory=${selectedValue}`);
+    setTools({ ...tools,category : res.data.allToolsdata });
+  }
+
   useEffect(() => {
-    getAllTools();
-  }, [gender]);
+    getAllTools(); 
+    getCategoryName()
+  }, []);
+
+
+
+  async function getCategoryName() {
+    try {
+   
+      const getBusinessCategory = await axios.get(
+        `/api/v1/admin/getAllBusinessCategorysList`
+      );
+
+   
+      console.log(getBusinessCategory);
+      
+      setBusinessCategory([...getBusinessCategory.data.list])
+      // setTools({ sliders : tools.sliders,category : getBusinessCategory.data.list });
+      // setStore(wd);
+    } catch (e) {
+      console.log(e);
+      
+      return dispatch(
+        error({
+          message: "somwthing went wrong in fetching wherehouse details",
+        })
+      );
+    }
+  }
+
+
+  useEffect(()=>{
+    // setTools({ ...tools,category :[] });
+ 
+   selectedValue &&  getCategory()
+  },[selectedValue])
 
   return (
-    <div className="my-10">
-      <h1 className="text-4xl font-bold text-center my-16 text-gray-800">
+    <div className="py-10">
+      <h1 className="text-4xl font-bold text-center py-1 text-gray-800">
         Tool Management
       </h1>
-      <div className="flex justify-center space-x-4 mb-10">
-        <button
-          className={`px-6 py-3 font-semibold rounded-full transition-all text-white shadow-lg ${
-            gender === "male"
-              ? "bg-indigo-600 hover:bg-indigo-700"
-              : "bg-indigo-400 hover:bg-indigo-500"
-          }`}
-          onClick={() => setGender(gender === "male" ? "female" : "male")}
-        >
-          Male
-        </button>
-        <button
-          className={`px-6 py-3 font-semibold rounded-full transition-all text-white shadow-lg ${
-            gender !== "male"
-              ? "bg-indigo-600 hover:bg-indigo-700"
-              : "bg-indigo-400 hover:bg-indigo-500"
-          }`}
-          onClick={() => setGender(gender === "female" ? "male" : "female")}
-        >
-          Female
-        </button>
-      </div>
+      <div className="flex justify-center space-x-3 items-center p-1">
+          <label className="title font-bold text-lg">Select Business category </label>
+          <select
+            className="rounded-lg border-2 border-indigo-500 focus:ring-2 focus:ring-purple-600 p-2"
+            onChange={(e) => setSelectedValue(e.target.value) }
+          >
+            <option value="">Select</option>
+            {
+              businessCategory.length > 0 && businessCategory.map((el,i)=>{
+
+                return <option value={el._id}>{el.name}</option>
+              })
+            }
+            </select>
+        </div>
       <ContentDisplay tools={tools} />
+     
     </div>
   );
 }

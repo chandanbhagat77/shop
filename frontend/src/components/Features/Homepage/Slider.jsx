@@ -14,8 +14,7 @@ import url from "../../../assets/url";
 import axios from "axios";
 
 const Slider = () => {
-  const [slider, setSlider] = useState([]);
-  const { gender } = useSelector((state) => state.auth);
+  const [slider, setSlider] = useState([]); 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const navigate = useNavigate();
@@ -36,7 +35,7 @@ const Slider = () => {
     async function getData() {
       try {
         const res = await axios.get(
-          `/api/v1/tools/getTool/SLIDER?gender=${gender}&page=1&limit=10&fields=name,label,coverImage,_id,shortDescription`
+          `/api/v1/tools/getTool/SLIDER?page=1&limit=10&fields=name,label,coverImage,_id,shortDescription`
         );
         if (res.data.products.length > 0) {
           setSlider([...res.data.products]);
@@ -46,7 +45,7 @@ const Slider = () => {
       }
     }
     getData();
-  }, [gender]);
+  }, []);
 
   useEffect(() => {
     let interval;
