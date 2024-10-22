@@ -10,7 +10,7 @@ import EverythingBox from "./EverythingBox";
 
 export default function Homepage() {
   return (
-    <>
+    <div className="bg-white">
       
       {/* <PresentSection /> */}
       {/* <ThinkingSection />
@@ -18,6 +18,6 @@ export default function Homepage() {
       <BusinessCategoryList/>
       <Slider/>
       <EverythingBox/>
-    </>
+    </div>
   );
 }

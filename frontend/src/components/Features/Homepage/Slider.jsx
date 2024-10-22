@@ -71,7 +71,7 @@ const Slider = () => {
           <img
             src={`${url}Tools/${slider[currentIndex]?.coverImage}`}
             alt={`Slide ${currentIndex + 1}`}
-            className="w-full h-full object-cover opacity-50"
+            className="w-full h-full object-fill opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-r md:from-black via-transparent md:to-black opacity-25" />
 

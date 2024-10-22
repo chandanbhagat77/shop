@@ -3,32 +3,42 @@ import React, { useEffect, useState } from 'react'
 import url from '../../../assets/url';
 import { BiCategory } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
+import { FaChevronRight } from 'react-icons/fa6';
 
 
 
 const CategoryCard = ({ cid, coverImage, title }) => {
-    const navigate = useNavigate();
-  
-    return (
-      <div className="flex flex-col items-center "    onClick={() => navigate(`/businesscategoryLists/${cid}`)}>
+  const navigate = useNavigate();
+
+  return (
+    <div
+    className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer min-w-[200px]" 
+    onClick={() => navigate(`/businesscategoryLists/${cid}`)}
+  >
+    <div className="relative w-full">
+      <img
+        src={`${url}Tools/${coverImage}`}
+        // alt={name}
+        className="w-full h-full object-cover object-top"
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-30 hover:bg-opacity-15 text-white hover:font-extrabold" />
+      <div className="absolute bottom-0 left-0 right-0 p-6 flex justify-between items-center lg:text-2xl text-xl">
+        <h3 className="  font-bold uppercase text-white">
+          {" "}
+          {title}
+        </h3>
         <div
-          className="w-full  rounded-xl shadow-lg overflow-hidden cursor-pointer transform hover:scale-105 transition-transform duration-300"
-          whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
-       
+          className="text-white"
+          whileHover={{ x: 5 }}
+          transition={{ duration: 0.2 }}
         >
-          <img
-            src={`${url}Tools/${coverImage}`}
-            alt={title}
-            className=" h-32 w-32 object-cover  transition-transform duration-500 hover:scale-110"
-          />
+          <FaChevronRight className="text-xl" />
         </div>
-        <h3 className=" font-semibold text-sm my-3   flex items-center">
-            <BiCategory className="text-gray-600 mr-2" />
-            {title}
-          </h3>
       </div>
-    );
-  };
+    </div>
+  </div>
+  );
+};
 
 
 export default function BusinessCategoryList() {
@@ -42,12 +52,50 @@ export default function BusinessCategoryList() {
     useEffect(()=>{
         getData()
     },[])
-  return (<div className='grid grid-cols-8 gap-x-2 px-10 py-3'>
-    {
-        category.length > 0 && category.map((el)=>{
-            return  <CategoryCard  cid={el._id} coverImage={el.coverImage} title={el.name}/>
-        })
-    }
-  </div>
-  )
+    return (
+      <div className="w-full px-5 py-4 overflow-x-auto">
+        <div className="hidden md:grid  lg:grid-cols-4 gap-2">
+          {
+            category.length > 0 && category.map((el) => (
+              <CategoryCard
+                key={el._id}
+                cid={el._id}
+                coverImage={el.coverImage}
+                title={el.name}
+                className="shadow-lg rounded-lg bg-white overflow-hidden"
+              />
+            ))
+          }
+          
+        </div>
+        <div className="flex md:hidden overflow-x-auto space-x-4">
+          
+          {
+            category.length > 0 && category.map((el) => (
+              <CategoryCard
+                key={el._id}
+                cid={el._id}
+                coverImage={el.coverImage}
+                title={el.name}
+              
+              />
+            ))
+          }
+          {
+            category.length > 0 && category.map((el) => (
+              <CategoryCard
+                key={el._id}
+                cid={el._id}
+                coverImage={el.coverImage}
+                title={el.name}
+               
+              />
+            ))
+          }
+        </div>
+      </div>
+    );
+    
+    
+  
 }
