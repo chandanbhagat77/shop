@@ -57,7 +57,7 @@ const BulkListLayoutProduct = ({ toolId }) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2">
         {!toolId ? (
           <motion.h2
             className="text-4xl lg:text-5xl font-bold text-gray-500 mb-12 text-center"
@@ -71,17 +71,20 @@ const BulkListLayoutProduct = ({ toolId }) => {
             </span>
           </motion.h2>
         ) : (
-          <motion.h2
-            className="text-4xl lg:text-5xl font-bold text-gray-500 mb-12 text-center"
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            You May also like{" "}
-            <span className="block md:inline-block bg-black text-white p-1 md:p-2 animate-pulse">
-              Simillar Collection
-            </span>
-          </motion.h2>
+          <>
+          {/* // <motion.h2
+          //   className="text-4xl lg:text-5xl font-bold text-gray-500 mb-12 text-center"
+          //   initial={{ y: -50, opacity: 0 }}
+          //   animate={{ y: 0, opacity: 1 }}
+          //   transition={{ duration: 0.8, delay: 0.2 }}
+          // >
+          //   You May also like{" "}
+          //   <span className="block md:inline-block bg-black text-white p-1 md:p-2 animate-pulse">
+          //     Simillar Collection
+          //   </span>
+          // </motion.h2> */}
+          </>
+
         )}
 
         <InfiniteScroll
@@ -90,7 +93,7 @@ const BulkListLayoutProduct = ({ toolId }) => {
           hasMore={hasMore}
           loader={<LoadingSpinner small={true} />}
           endMessage={
-            <div className="text-center text-2xl font-bold mt-20">
+            <div className="text-center text-2xl font-bold mt-4">
               You have seen all products
               <div>
                 <motion.button

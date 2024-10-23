@@ -47,7 +47,7 @@ const ProductCard = ({ product }) => {
           <img
             src={`${url}img/${product?.coverImage}`}
             alt={product?.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:animate-pulse"
+            className="w-full h-80 object-center transition-transform duration-500 group-hover:scale-110 group-hover:animate-pulse"
           />
         </motion.div>
         <div className="absolute bottom-0 right-4 flex space-x-2 ">
