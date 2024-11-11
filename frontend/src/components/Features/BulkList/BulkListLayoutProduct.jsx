@@ -52,40 +52,13 @@ const BulkListLayoutProduct = ({ toolId }) => {
 
   return (
     <motion.div
-      className="py-24"
+      className="py-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
       <div className="max-w-7xl mx-auto px-2">
-        {!toolId ? (
-          <motion.h2
-            className="text-4xl lg:text-5xl font-bold text-gray-500 mb-12 text-center"
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Discover Our{" "}
-            <span className="block md:inline-block bg-black text-white p-1 md:p-2 animate-pulse">
-              Premium Collection
-            </span>
-          </motion.h2>
-        ) : (
-          <>
-          {/* // <motion.h2
-          //   className="text-4xl lg:text-5xl font-bold text-gray-500 mb-12 text-center"
-          //   initial={{ y: -50, opacity: 0 }}
-          //   animate={{ y: 0, opacity: 1 }}
-          //   transition={{ duration: 0.8, delay: 0.2 }}
-          // >
-          //   You May also like{" "}
-          //   <span className="block md:inline-block bg-black text-white p-1 md:p-2 animate-pulse">
-          //     Simillar Collection
-          //   </span>
-          // </motion.h2> */}
-          </>
-
-        )}
+        
 
         <InfiniteScroll
           dataLength={products.length}

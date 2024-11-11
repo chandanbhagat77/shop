@@ -9,13 +9,7 @@ const LoadingSpinner = ({ justLoad, small = false }) => {
     >
       <div className="loading-container">
         <div className="spinner"></div>
-        <img
-          src={
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCpgTlAyoPE18kvCRoq30TFvY79liTg-vp_A&s"
-          }
-          alt="Loading"
-          className="loading-image "
-        />
+        
         <style>{`
           .loading-container {
             position: relative;

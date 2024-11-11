@@ -12,6 +12,7 @@ const adminRouter = express.Router()
 adminRouter.get("/getAllMyTools", getAllMyTools)
 adminRouter.get("/getToolById/:toolId", getToolById)
 
+adminRouter.get("/getAllBusinessCategorysList", getAllBusinessList)
 
 
 adminRouter.use(isLoggedIn, giveAccess("ADMIN"))
@@ -29,7 +30,6 @@ adminRouter.patch("/addColors", addOtherSimillarColorProduct)
 
 adminRouter.get("/confirmShipment/:productId", confirmShipemntForOrder)
 adminRouter.get("/getAllOrdersForShipment", getAllOrdersForShipment)
-adminRouter.get("/getAllBusinessCategorysList", getAllBusinessList)
 
 // add and remove of pproduct from the category
 adminRouter.patch("/actionOnTool", actionOnTool)

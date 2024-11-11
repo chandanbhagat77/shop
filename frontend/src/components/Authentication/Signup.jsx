@@ -16,6 +16,7 @@ import {
 import { SendOtpToUser, signupForm } from "../../redux/slices/authSlice";
 import { error, info, success, warning } from "../../redux/slices/errorSlice";
 import { FaEye } from "react-icons/fa";
+import { FaBagShopping } from "react-icons/fa6";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -203,10 +204,11 @@ const SignUpPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-700 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-4xl bg-gray-300 md:bg-gradient-to-tl from-gray-400 via-gray-300 to-gray-300 shadow-2xl rounded-2xl overflow-hidden capitalize">
-        <div className="px-8 py-12">
-          <h2 className="text-3xl font-bold text-center text-gray-700 mb-2 capitalize animate-pulse">
-            {step === 1 ? "Become Member of Wildsquat" : "Verify OTP"}
+      <div className="w-full max-w-4xl bg-gray-100 shadow-2xl rounded-2xl overflow-hidden capitalize">
+        <div className="px-8 py-12 ">
+          <h2 className="text-3xl font-bold text-center text-gray-700 mb-2 capitalize animate-pulse flex justify-center">
+            {step === 1 ? "Become Member of Shopit" : "Verify OTP"}
+            {step == 1 &&  <FaBagShopping/>}
           </h2>
           <p className="text-center text-gray-600 mb-8">
             {step === 1
@@ -229,14 +231,14 @@ const SignUpPage = () => {
                         field.type == "password" && show ? "text" : field.type
                       }
                       required
-                      className={`block w-full pl-10 pr-3 py-2 rounded-md leading-5 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-gray-500 ring-1 sm:text-sm  ${
+                      className={`block w-full pl-10 pr-3 py-2 rounded-md leading-5 placeholder-gray-500 focus:outline-none  ring-1 sm:text-sm  ${
                         (field.name == "cnfpassword" ||
                           field.name == "password") &&
                         (formData.password !== formData.cnfpassword ||
                           (formData.password.length < 8 &&
                             formData.password.length > 0))
                           ? "ring-red-500 ring-1 focus:ring-red-600"
-                          : ""
+                          : "ring-gray-300 focus:ring-gray-800 focus:border-gray-500 "
                       } `}
                       placeholder={field.placeholder}
                       value={formData[field.name]}
