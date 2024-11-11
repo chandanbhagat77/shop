@@ -1,23 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  FaChevronLeft,
-  FaChevronRight,
-  FaPlay,
-  FaPause,
-  FaInfoCircle,
-} from "react-icons/fa";
-import { IoMdTime } from "react-icons/io";
-import url from "../../../assets/url";
 import axios from "axios";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import url from "../../../assets/url";
 
 const Slider = () => {
   const [slider, setSlider] = useState([]); 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const navigate = useNavigate();
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) =>
@@ -35,7 +24,7 @@ const Slider = () => {
     async function getData() {
       try {
         const res = await axios.get(
-          `/api/v1/tools/getTool/SLIDER?page=1&limit=10&fields=name,label,coverImage,_id,shortDescription`
+          `/api/v1/tools/getTool/SLIDER?page=1&limit=10&fields=coverImage,_id`
         );
         if (res.data.products.length > 0) {
           setSlider([...res.data.products]);
@@ -47,18 +36,10 @@ const Slider = () => {
     getData();
   }, []);
 
-  useEffect(() => {
-    let interval;
-    if (isPlaying) {
-      interval = setInterval(nextSlide, 5000);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, nextSlide]);
-
   if (!slider?.length) return null;
 
   return (
-    <div className="relative w-full h-[50vh] lg:h-[80vh] bg-gray-900 text-white overflow-hidden mt-2 md:mt-5">
+    <div className="relative w-full h-[40vh] lg:h-[70vh] bg-gray-900 overflow-hidden mt-2 md:mt-5">
       <AnimatePresence initial={false}>
         <motion.div
           key={currentIndex}
@@ -71,48 +52,8 @@ const Slider = () => {
           <img
             src={`${url}Tools/${slider[currentIndex]?.coverImage}`}
             alt={`Slide ${currentIndex + 1}`}
-            className="w-full h-full object-fill opacity-50"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r md:from-black via-transparent md:to-black opacity-10" />
-
-          <div className="absolute inset-0 flex flex-col justify-center items-start p-12 md:p-24 space-y-6">
-            <motion.h2
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="text-4xl md:text-6xl font-bold tracking-tight"
-            >
-              {slider[currentIndex]?.label}
-            </motion.h2>
-            <motion.p
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="text-lg md:text-xl max-w-2xl"
-            >
-              {slider[currentIndex]?.shortDescription}
-            </motion.p>
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="flex items-center space-x-4 md:flex-row flex-col md:space-x-2 space-y-2"
-            >
-              <button
-                onClick={() =>
-                  navigate(`/productList/${slider[currentIndex]?._id}`)
-                }
-                className="bg-white text-black px-6 py-3 rounded-full flex items-center space-x-2 hover:bg-gray-200 transition-colors duration-300"
-              >
-                <FaInfoCircle />
-                <span>Explore It</span>
-              </button>
-              <div className="flex items-center space-x-2">
-                <IoMdTime className="text-2xl" />
-                <span>Limited Time Offer</span>
-              </div>
-            </motion.div>
-          </div>
         </motion.div>
       </AnimatePresence>
 
@@ -122,37 +63,14 @@ const Slider = () => {
           onClick={prevSlide}
           className="bg-white/20 p-2 rounded-full hover:bg-white/40 transition-colors duration-300"
         >
-          <FaChevronLeft className="text-2xl" />
-        </button>
-        <button
-          onClick={() => setIsPlaying(!isPlaying)}
-          className="bg-white/20 p-2 rounded-full hover:bg-white/40 transition-colors duration-300"
-        >
-          {isPlaying ? (
-            <FaPause className="text-2xl" />
-          ) : (
-            <FaPlay className="text-2xl" />
-          )}
+          <FaChevronLeft className="text-2xl text-white" />
         </button>
         <button
           onClick={nextSlide}
           className="bg-white/20 p-2 rounded-full hover:bg-white/40 transition-colors duration-300"
         >
-          <FaChevronRight className="text-2xl" />
+          <FaChevronRight className="text-2xl text-white" />
         </button>
-      </div>
-
-      {/* Slide Indicators */}
-      <div className="absolute md:bottom-8 left-[50%] -translate-x-[50%]  bottom-5 md:left-20 flex space-x-2">
-        {slider.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              currentIndex === index ? "bg-white w-8" : "bg-white/50"
-            }`}
-          />
-        ))}
       </div>
     </div>
   );

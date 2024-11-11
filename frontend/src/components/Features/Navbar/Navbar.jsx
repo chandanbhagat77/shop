@@ -77,9 +77,9 @@ const Navbar = () => {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <img src={logo} alt="Wild Squat Logo" className="scale-125 h-12" />
+            <img src={logo} alt="Wild Squat Logo" className="scale-125 h-12 mr-2" />
             <span className="font-bold text-lg text-gray-800 font-serif ">
-            BHARTI Things
+            Bharti Things
             </span>
           </Link>
 

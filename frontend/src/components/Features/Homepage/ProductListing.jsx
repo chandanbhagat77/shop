@@ -21,7 +21,7 @@ const ProductListing = ({ productId }) => {
       setIsLoading(true);
       try {
         const res = await axios.get(
-          `/api/v1/product/getAllTrendingProducts/${productId}?populate=products&populateField=name,price,_id,coverImage&populateLimit=4&populatPage=${page}`
+          `/api/v1/product/getAllTrendingProducts/${productId}?populate=products&populateField=name,price,_id,coverImage&populateLimit=5&populatPage=${page}`
         );
         if (res.data.products === 0) {
           setPage(1);
@@ -70,7 +70,7 @@ const ProductListing = ({ productId }) => {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-6"
+              className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-2"
             >
               {/* Ensure grid is responsive */}
               {products?.length > 0 &&
