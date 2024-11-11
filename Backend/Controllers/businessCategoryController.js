@@ -14,6 +14,34 @@ exports.getAllBusinessCategory = catchAsync(async(req,res,next)=>{
         data : category
     })
 })
+
+exports.getNavbarData = catchAsync(async(req,res,next)=>{
+
+    let category= await BusinessCategory.find({},"-products -__v");
+    const innerset = await Tool.find({
+        name : "CATEGORY"
+    },"label coverImage businessCategory")
+    
+    // console.log(category,"inset",innerset);
+    category=category.map(el=>{
+
+        let add=innerset.filter(e=>e.businessCategory.toString() == el._id.toString())
+        console.log(add);
+        
+        return {...el._doc,subCategory : add};
+       
+    })
+console.log("updated",category);
+
+    
+
+    res.status(200).send({
+        status : "success",
+        data : category
+    })
+})
+
+
 exports.getCategoryById = catchAsync(async (req, res, next) => {
     const toolId = req.params.toolId;
 

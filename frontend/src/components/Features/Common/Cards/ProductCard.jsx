@@ -40,14 +40,14 @@ const ProductCard = ({ product }) => {
       <div className="relative">
         <motion.div
           onClick={() => navigate(`/productDetails/${product?._id}`)}
-          className="w-full overflow-hidden"
+          className="w-full overflow-hidden "
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.4 }}
         >
           <img
             src={`${url}img/${product?.coverImage}`}
             alt={product?.name}  
-            className="w-full h-80 object-cover  transition-transform duration-500 group-hover:scale-110 group-hover:animate-pulse"
+            className=" object-cover  transition-transform duration-500 group-hover:scale-110 group-hover:animate-pulse h-[40vh] w-full"
           />
         </motion.div>
         <div className="absolute bottom-0 right-4 flex space-x-2 ">

@@ -73,7 +73,7 @@ const Slider = () => {
             alt={`Slide ${currentIndex + 1}`}
             className="w-full h-full object-fill opacity-50"
           />
-          <div className="absolute inset-0 bg-gradient-to-r md:from-black via-transparent md:to-black opacity-25" />
+          <div className="absolute inset-0 bg-gradient-to-r md:from-black via-transparent md:to-black opacity-10" />
 
           <div className="absolute inset-0 flex flex-col justify-center items-start p-12 md:p-24 space-y-6">
             <motion.h2

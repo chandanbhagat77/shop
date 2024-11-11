@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import SearchCategoryProductAndItem from "./../../common/SearchCategoryProduct";
 import NavbarActions from "./NavbarAction";
-import logo from "./../../../assets/logo.jpeg";
+import logo from "./../../../assets/logo.png";
 import PremiumNavbar from "../Homepage/NavList";
 
 const NavItem = ({ category }) => {
@@ -14,7 +14,7 @@ const NavItem = ({ category }) => {
   const Icon = FiBox;
 
   return (
-    <div className="group relative">
+    <div className="group relative z-10">
       <button
         onClick={() =>
           navigate(`/${category.name.toLowerCase().replace(/\s+/g, "-")}`)
@@ -29,7 +29,7 @@ const NavItem = ({ category }) => {
       </button>
 
       {category?.products?.length > 0 && (
-        <div className="absolute left-0 top-full hidden group-hover:block w-[50vw]  shadow-lg rounded-lg overflow-hidden  -translate-x-[15vw] bg-white bg-opacity-85 ">
+        <div className="absolute left-0 top-full hidden group-hover:block w-[50vw]  shadow-lg rounded-lg overflow-hidden  -translate-x-[15vw] bg-white bg-opacity-85 z-10 ">
           <ul className="py-2 grid grid-cols-3 gap-1">
             {category?.products?.map((item, index) => (
               <li
@@ -57,10 +57,12 @@ const Navbar = () => {
   async function getData() {
     try {
       const res = await axios.get(
-        `/api/v1/tools/getTool/CATEGORY?gender=${gender}&limit=6&page=1&fields=label,_id,products&populate=products&populateField=name,_id,coverImage&populateLimit=10`
+        `/api/v1/businessCategory/getNavbarData`
       );
+      console.log("res of data is ",res);
+      
 
-      setCategories([...res?.data?.products]);
+      setCategories([...res?.data?.data]);
     } catch (e) {}
   }
 
@@ -76,20 +78,20 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img src={logo} alt="Wild Squat Logo" className="scale-125 h-12" />
-            <span className="font-bold text-lg text-gray-800 font-serif first-letter:text-2xl first-letter:font-bold ">
-              SHOP<span className="text-gray-500">IT</span>{" "}
+            <span className="font-bold text-lg text-gray-800 font-serif ">
+            BHARTI Things
             </span>
           </Link>
 
           {/* Search Bar */}
-          <div className="hidden md:flex md:flex-1 mx-8">
-            <div className="relative w-full ">
+          <div className="hidden lg:flex  mx-8">
+            <div className="relative w-[40vw] z-50 ">
               <SearchCategoryProductAndItem />
             </div>
           </div>
 
           {/* Navbar Actions */}
-          <div className="hidden md:flex">
+          <div className="hidden lg:flex">
             <NavbarActions />
           </div>
 
@@ -110,24 +112,28 @@ const Navbar = () => {
         </nav>
       </div>
 
-      <div className="hidden lg:block">
-        {/* <PremiumNavbar categories={categories} /> */}
+      <div className="hidden lg:block z-10">
+        <PremiumNavbar categories={categories} />
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden bg-white shadow-lg absolute inset-x-0 top-16 max-h-screen overflow-y-auto z-40">
-          <div className="flex justify-center">
+        <div className="lg:hidden bg-white shadow-lg absolute inset-x-0 top-16 max-h-screen overflow-y-auto z-40 min-h-[50vh]">
+          <div className="flex justify-center mt-1">
             {" "}
             <NavbarActions />
           </div>
-          <div className="p-4 ">
+          <div className="p-4 border-b border-gray-200">
             <SearchCategoryProductAndItem />
           </div>
 
           <div className="py-4 px-4">
             {categories.map((category) => (
-              <MobileNavItem key={category.name} category={category} />
+              <MobileNavItem
+                key={category._id}
+                category={category}
+                setIsMenuOpen={setIsMenuOpen}
+              />
             ))}
           </div>
         </div>
@@ -136,7 +142,7 @@ const Navbar = () => {
   );
 };
 
-const MobileNavItem = ({ category }) => {
+const MobileNavItem = ({ category, setIsMenuOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -160,7 +166,11 @@ const MobileNavItem = ({ category }) => {
           {category.products.map((subItem, index) => (
             <div
               key={index}
-              onClick={() => navigate(`/productDetails/${subItem._id}`)}
+              onClick={() => {
+                setIsOpen(false);
+                setIsMenuOpen((state) => !state);
+                navigate(`/productDetails/${subItem._id}`);
+              }}
               className="py-2 px-4 hover:bg-gray-100 cursor-pointer rounded-md transition-colors duration-200"
             >
               {subItem.name}

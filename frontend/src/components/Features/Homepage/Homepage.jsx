@@ -15,7 +15,7 @@ export default function Homepage() {
       {/* <PresentSection /> */}
       {/* <ThinkingSection />
       <Banner /> */}
-      <BusinessCategoryList/>
+      {/* <BusinessCategoryList/> */}
       <Slider/>
       <EverythingBox/>
     </div>

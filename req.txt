@@ -1,6 +1,10 @@
 // 18-10-24
  clone website and add and remove some functinality
+and added many things form category to subcategory and many more 
 
+
+// 11-11-24 
+to adjust the size of image and making it more clear , 
 
 
 

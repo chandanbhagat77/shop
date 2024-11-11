@@ -93,7 +93,7 @@ const BulkListLayoutCategory = ({ tool }) => {
       
     }
     getData()
-  },[])
+  },[params.tool])
 
   return (
     <motion.div

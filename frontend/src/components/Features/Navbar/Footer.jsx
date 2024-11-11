@@ -1,4 +1,4 @@
-import logo from "./../../../assets/logo.jpeg";
+import logo from "./../../../assets/logo.png";
 import { FaInstagram, FaFacebookF, FaYoutube } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
@@ -10,7 +10,7 @@ export default function Footer() {
           <div>
             {/* <h2 className="font-bold text-2xl mb-4 text-gray-900">WILDSQUAT</h2> */}
             <span className="font-bold  text-gray-800 font-serif first-letter:text-2xl first-letter:font-bold text-2xl ">
-              WILD<span className="text-gray-500">SQUAT</span>{" "}
+             BHARTI Things
             </span>
             <div className="my-2">
               {" "}
