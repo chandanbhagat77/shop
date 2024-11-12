@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import MainLayout from "../Layout/MainLayout";
-import CreateProductForm from "../Admin/ProductsCRUD/AddProduct";
-import AdminPanel from "../Admin/Dashboard/AdminDash";
+import CreateProductForm from "../Admin/ProductsCRUD/AddProduct"; 
 import SignUpPage from "../Authentication/Signup";
 import Homepage from "../Features/Homepage/Homepage";
 import AccessDeniedPage from "../Instruction/AccessDenide";

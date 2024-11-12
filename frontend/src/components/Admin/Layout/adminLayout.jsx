@@ -6,8 +6,7 @@ import {
   FaClipboardList,
   FaChartLine,
   FaTools,
-  FaCogs,
-  FaQuestionCircle,
+  FaCogs, 
 } from "react-icons/fa"; 
 import { useNavigate } from "react-router-dom";
 
@@ -18,14 +17,14 @@ const AdminLayout = ({children}) => {
 
   const tabs = [
     { id: "dashboard", label: "Dashboard", icon: <FaChartPie /> },
-    { id: "users", label: "Users", icon: <FaUsers /> },
+    { id: "users", label: "Stocks", icon: <FaUsers /> },
     { id: "products", label: "Products", icon: <FaBox /> },
     { id: "orders", label: "Orders", icon: <FaClipboardList /> },
     { id: "analytics", label: "Analytics", icon: <FaChartLine /> },
-    { id: "tools", label: "Tools", icon: <FaTools /> },
-    { id: "manage-tools", label: "Manage Tools", icon: <FaCogs /> }, 
-    { id: "businessCategory", label: "Category", icon: <FaTools /> },
-    { id: "help", label: "Help", icon: <FaQuestionCircle /> },
+    { id: "tools", label: "Slider,Sub-Category", icon: <FaTools /> },
+    { id: "manage-tools", label: "Manage Slider,Sub-Category", icon: <FaCogs /> }, 
+    { id: "businessCategory", label: "Add New Item Category", icon: <FaTools /> },
+    
   ];
 
   const renderTabContent = (id) => {
@@ -68,8 +67,9 @@ const AdminLayout = ({children}) => {
       <aside
         className={`bg-white shadow-lg w-64 p-4 transition-transform duration-300 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 `}
       >
-        <h1 className="text-2xl font-bold text-center mb-6">Admin Panel</h1>
+        <h1 className="text-2xl font-bold text-center mb-6">BHARTI ADMIN PANEL</h1>
         <nav className="flex flex-col space-y-2 ">
+         
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -90,7 +90,7 @@ const AdminLayout = ({children}) => {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 p-1 py-10">
+      <div className="flex-1 p-1 pt-5 px-5">
         <button
           className="md:hidden mb-4 p-2 bg-blue-600 text-white rounded-lg"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

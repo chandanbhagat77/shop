@@ -162,9 +162,7 @@ const EditProductForm = () => {
   return (
     <div className="mb-60">
       <div className="mb-20">
-        <div className="mx-2 my-3 font-bold text-3xl text-indigo-500 bg-clip-text ">
-          Edit Product
-        </div>
+        
         <ProductSearch setSelectedProduct={setSelectedProduct} />
       </div>
       {editedProduct?.name && (

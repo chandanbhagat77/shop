@@ -223,24 +223,23 @@ const CreateProductForm = () => {
   return (
     <>
       <div className=" min-h-screen py-12 px-1 sm:px-1 lg:px-2 ">
-        <div className="text-indigo-500 py-6 px-1 lg:px-8">
-          <h1 className=" text-2xl lg:text-4xl font-extrabold  font-serif">
-            Create New Product
-          </h1>
-        </div>
+        
 
         {/* Product Search Section */}
         <div className="mb-10">
-          <div className="mx-auto text-center my-1 font-bold text-xl">
+          <div className="mx-auto text-start my-1 font-bold capitalize text-xl">
             Auto Fill Product
           </div>
           <ProductSearch setSelectedProduct={handleClickSelectedProduct} />
         </div>
 
         {/* Select Gender */}
-        <div className="flex justify-center space-x-3 items-center p-1">
-          <label className="title font-bold text-lg">Select Business category </label>
-          <select
+        <div className="flex justify-start space-x-10 items-center p-2">
+          <label className="title font-bold text-lg">
+            <div>Select Business category</div>
+             </label>
+         <div>
+         <select
             className="rounded-lg border-2 border-indigo-500 focus:ring-2 focus:ring-purple-600 p-2"
             onChange={(e) => setSelectedValue(e.target.value) }
           >
@@ -252,6 +251,7 @@ const CreateProductForm = () => {
               })
             }
             </select>
+         </div>
         </div>
 
     {   selectedValue &&  <form onSubmit={handleSubmit} className="py-8 p-1 lg:px-8 space-y-6">

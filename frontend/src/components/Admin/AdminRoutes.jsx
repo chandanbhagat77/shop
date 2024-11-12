@@ -1,10 +1,8 @@
-import React from 'react'
-import AdminPanel from './Dashboard/AdminDash'
-import { Route, Routes } from 'react-router-dom'
-import MainLayout from '../Layout/MainLayout'
+import React from 'react' 
+import { Route, Routes } from 'react-router-dom' 
 import ProductActions from './ProductsCRUD/ProductsCRUD'
 import AdminLayout from './Layout/adminLayout'
-import ProductData from './Dashboard/ProductData'
+import DashbordHome from './Dashboard/DashbordHome'
 import ManageTools from './Tools/ManageTools'
 import CreateBusinessCategory from './Tools/CreateBusinessCategory'
 import CreateCategory from './Tools/CreateCatefory'
@@ -20,7 +18,7 @@ export default function AdminRoutes() {
           element={
             <AdminLayout>
 
-              <ProductData />
+              <DashbordHome />
             </AdminLayout>
        
           }

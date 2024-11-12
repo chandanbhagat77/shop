@@ -84,9 +84,9 @@ const CreateCategory = () => {
   return (
     <div className="max-w-2xl mx-auto py-20  px-10  bg-white rounded-2xl shadow-2xl">
       <div className="mb-6">
-        <h2 className="text-4xl font-bold text-gray-900">Category Form</h2>
+        <h2 className="text-4xl font-bold text-gray-900">Web Ui Data Form</h2>
         <p className="text-sm text-gray-500">
-          Create category, add slider
+          Create Slider and Sub-Category for your site
         </p>
       </div>
 

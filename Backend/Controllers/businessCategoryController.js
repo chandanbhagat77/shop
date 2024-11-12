@@ -102,7 +102,24 @@ exports.getBusinessCategoryFilterList = catchAsync(async (req,res,next)=>{
 
 
 
+exports.getAnalytics = catchAsync(async(req,res,next)=>{
+    const id=req.params.id;
+    const data=await BusinessCategory.findById(id).select("products").populate("products","viewCount name ");
+    console.log(data);
+    
+    const products = data.products
+    .sort((a, b) => b.viewCount - a.viewCount)
+    .slice(0, 5);
+    
 
+
+    res.status(200).send(
+        {
+            status : "success",
+            data : products
+        }
+    )
+})
 
 
 
