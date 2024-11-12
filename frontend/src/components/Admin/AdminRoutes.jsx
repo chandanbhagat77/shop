@@ -7,6 +7,7 @@ import ManageTools from './Tools/ManageTools'
 import CreateBusinessCategory from './Tools/CreateBusinessCategory'
 import CreateCategory from './Tools/CreateCatefory'
 import Main from './OrderCRUD/Main'
+import StockMain from './Stocks/StockMain'
 
 export default function AdminRoutes() {
   return (
@@ -24,10 +25,10 @@ export default function AdminRoutes() {
           }
           />
         <Route
-          path="/users"
+          path="/stocks"
           element={
-                      <AdminLayout>
-              {/* <AdminPanel /> */}
+                      <AdminLayout> 
+                        <StockMain/>
                    </AdminLayout>
           }
           />

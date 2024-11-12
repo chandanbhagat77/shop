@@ -17,7 +17,7 @@ const AdminLayout = ({children}) => {
 
   const tabs = [
     { id: "dashboard", label: "Dashboard", icon: <FaChartPie /> },
-    { id: "users", label: "Stocks", icon: <FaUsers /> },
+    { id: "stocks", label: "Stocks", icon: <FaUsers /> },
     { id: "products", label: "Products", icon: <FaBox /> },
     { id: "orders", label: "Orders", icon: <FaClipboardList /> },
     { id: "analytics", label: "Analytics", icon: <FaChartLine /> },
@@ -53,6 +53,9 @@ const AdminLayout = ({children}) => {
         // return <CreateBusinessCategory />;
       case "manage-tools":
         nevigate("/adminDash/manage-tools")
+        return
+      case "stocks":
+        nevigate("/adminDash/stocks")
         return
         // return <ManageTools />;
       default:
