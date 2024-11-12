@@ -13,6 +13,7 @@ import BulkListLayoutCard from "../Features/BulkList/BulkListLayoutCard";
 import Product from "../Features/ProductDetails/Product";
 import ProfileOut from "../Features/Profile/ProfileMainBox";
 import BulkListLayoutCategory from "../Features/BulkList/BulkListLayoutCategory";
+import AdminRoutes from "../Admin/AdminRoutes";
 
 export default function AppRoutes() {
   return (
@@ -43,7 +44,7 @@ export default function AppRoutes() {
         </Route>
         <Route element={<Authentication allow={["ADMIN"]} />}>
           <Route path="/createProduct" element={<CreateProductForm />} />
-          <Route path="/adminDash" element={<AdminPanel />} />
+          <Route path="/adminDash/*" element={<AdminRoutes />} />
         </Route>
 
         <Route

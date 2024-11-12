@@ -8,16 +8,12 @@ import {
   FaTools,
   FaCogs,
   FaQuestionCircle,
-} from "react-icons/fa";
-import ProductActions from "./../ProductsCRUD/ProductsCRUD";
-import ManageTools from "./../Tools/ManageTools";
-import CreateCategory from "./../Tools/CreateCatefory";
-import ProductData from "./ProductData";
-import Main from "../OrderCRUD/Main";
-import CreateBusinessCategory from "../Tools/CreateBusinessCategory";
+} from "react-icons/fa"; 
+import { useNavigate } from "react-router-dom";
 
-const AdminPanel = () => {
+const AdminLayout = ({children}) => {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const nevigate=useNavigate()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const tabs = [
@@ -32,24 +28,39 @@ const AdminPanel = () => {
     { id: "help", label: "Help", icon: <FaQuestionCircle /> },
   ];
 
-  const renderTabContent = () => {
-    switch (activeTab) {
+  const renderTabContent = (id) => {
+    switch (id) {
       case "products":
-        return <ProductActions />;
+        console.log("NEVIGATING");
+        
+        nevigate("/adminDash/products")
+        return
+        // return <ProductActions />;
       case "dashboard":
-        return <ProductData />;
+        nevigate("/adminDash/")
+        return
+        // return <ProductData />;
       case "orders":
-        return <Main />;
+        nevigate("/adminDash/orders")
+        return
+        // return <Main />;
       case "tools":
-        return <CreateCategory />;
+        nevigate("/adminDash/tools")
+        return
+        // return <CreateCategory />;
       case "businessCategory":
-        return <CreateBusinessCategory />;
+        nevigate("/adminDash/businessCategory")
+        return
+        // return <CreateBusinessCategory />;
       case "manage-tools":
-        return <ManageTools />;
+        nevigate("/adminDash/manage-tools")
+        return
+        // return <ManageTools />;
       default:
         return <p className="text-gray-600">Content for {activeTab}</p>;
     }
   };
+ 
 
   return (
     <div className="flex min-h-screen bg-white">
@@ -67,7 +78,9 @@ const AdminPanel = () => {
                   ? "bg-blue-600 text-white"
                   : "text-gray-700 hover:bg-blue-100"
               }`}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {setActiveTab(tab.id)
+                renderTabContent(tab.id)
+              }}
             >
               <span className="mr-2">{tab.icon}</span>
               {tab.label}
@@ -85,11 +98,12 @@ const AdminPanel = () => {
           Toggle Menu
         </button>
         <div className="bg-white">
-          {renderTabContent()}
+          
+          {children}
         </div>
       </div>
     </div>
   );
 };
 
-export default AdminPanel;
+export default AdminLayout;

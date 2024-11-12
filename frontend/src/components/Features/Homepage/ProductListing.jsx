@@ -21,7 +21,7 @@ const ProductListing = ({ productId }) => {
       setIsLoading(true);
       try {
         const res = await axios.get(
-          `/api/v1/product/getAllTrendingProducts/${productId}?populate=products&populateField=name,price,_id,coverImage&populateLimit=5&populatPage=${page}`
+          `/api/v1/product/getAllTrendingProducts/${productId}?populate=products&populateField=name,price,_id,coverImage&populateLimit=6&populatPage=${page}`
         );
         if (res.data.products === 0) {
           setPage(1);
