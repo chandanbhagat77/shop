@@ -16,8 +16,7 @@ const ChangeOrder = ({ docid, onClose }) => {
       try {
         const response = await axios.get(
           `/api/v1/admin/getToolByIdManage/${docid}?fields=name,_id,products,shortDescription&populate=products&populateField=name,price,_id,coverImage&populateLimit=30&page=1`
-        );
-        console.log(response);
+        ); 
 
         setTool(response.data.products);
         setProducts(response.data.products.products);

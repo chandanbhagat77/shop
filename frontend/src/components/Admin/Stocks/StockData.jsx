@@ -18,10 +18,8 @@ export default function StockData() {
   const [openDialog, setOpenDialog] = useState(false);
   async function getCategoryData() {
     try {
-        console.log("selected value",selectedValue);
-        
-        const data=await axios.get(`/api/v1/businessCategory/getCategoryById/${selectedValue}?populate=products&populateField=name,stock,price,coverImage&populatPage=${page}`)
-        console.log("data is ",data.data);
+          
+        const data=await axios.get(`/api/v1/businessCategory/getCategoryById/${selectedValue}?populate=products&populateField=name,stock,price,coverImage&populatPage=${page}`) 
         const newProducts = data?.data?.products;
 
         if (newProducts?.length === 0) setHasMore(false);
@@ -41,13 +39,12 @@ export default function StockData() {
             `/api/v1/admin/getAllBusinessCategorysList`
           );
     
-       
-          console.log(getBusinessCategory);
+        
           
           setBusinessCategory([...getBusinessCategory.data.list])
           
         } catch (e) {
-          console.log(e);
+       
           
           return dispatch(
             error({

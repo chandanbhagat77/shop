@@ -16,8 +16,7 @@ const Banner = ({ order = 0 }) => {
       try {
         const res = await axios.get(
           `/api/v1/tools/getTool/SERIES?gender=${gender}&page=1&limit=2`
-        );
-        console.log("SERIES REs", res);
+        ); 
 
         setProduct({ ...res?.data?.products[order] });
       } catch (e) {

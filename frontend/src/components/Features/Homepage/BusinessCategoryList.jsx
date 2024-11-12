@@ -44,8 +44,7 @@ const CategoryCard = ({ cid, coverImage, title }) => {
 export default function BusinessCategoryList() {
     const [category,setCategory]=useState([])
     async function getData() {
-        const data= await axios.get("/api/v1/businessCategory/getHomepageCategory");
-        console.log(data);
+        const data= await axios.get("/api/v1/businessCategory/getHomepageCategory"); 
         setCategory(data.data?.data)
         
     }

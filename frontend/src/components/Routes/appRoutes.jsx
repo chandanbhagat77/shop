@@ -83,7 +83,7 @@ export default function AppRoutes() {
           path="/productList/:id"
           element={
             <MainLayout>
-              <div className="">
+              <div className="mt-20">
                 <BulkListLayoutProduct />
               </div>
             </MainLayout>

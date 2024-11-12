@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
         dispatch(warning({ message: msg || "Failed to add" }));
       }
     } catch (e) {
-      console.log(e);
+  
 
       dispatch(
         error({
@@ -32,7 +32,7 @@ const ProductCard = ({ product }) => {
   return (
     <motion.div
       key={product?._id}
-      className=" bg-gray-100 font-semibold  shadow-lg  overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl rounded-lg "
+      className="  font-semibold  shadow-lg  overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl rounded-lg "
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -47,10 +47,16 @@ const ProductCard = ({ product }) => {
           <img
             src={`${url}img/${product?.coverImage}`}
             alt={product?.name}  
-            className=" object-cover  transition-transform duration-500 group-hover:scale-110 group-hover:animate-pulse h-[40vh] w-full"
+            className=" object-cover  transition-transform duration-500 group-hover:scale-110 group-hover:animate-pulse h-[50vh] w-full"
           />
+           <div className="p-2 text-center absolute bottom-0 bg-gradient-to-br from-transparent to-black w-full">
+        <h3 className=" font-bold lg:font-semibold  text-white mb-2">
+          {product?.name}
+        </h3>
+        <p className="text-2xl font-bold text-white">₹{product?.price}</p>
+      </div>
         </motion.div>
-        <div className="absolute bottom-0 right-4 flex space-x-2 ">
+        <div className="absolute bottom-2 right-1 flex space-x-2 ">
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -61,12 +67,7 @@ const ProductCard = ({ product }) => {
           </motion.button>
         </div>
       </div>
-      <div className="p-6 text-center ">
-        <h3 className=" font-bold lg:font-semibold  text-gray-600 mb-2">
-          {product?.name}
-        </h3>
-        <p className="text-2xl font-bold text-gray-800">₹{product?.price}</p>
-      </div>
+     
     </motion.div>
   );
 };

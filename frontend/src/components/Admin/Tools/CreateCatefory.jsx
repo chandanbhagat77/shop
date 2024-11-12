@@ -49,8 +49,7 @@ const CreateCategory = () => {
       const data = await axios.post("/api/v1/admin/createCategory", fd);
 
       dispatch(success({ message: data.data.msg || "something went wrong" }));
-    } catch (e) {
-      console.log(e);
+    } catch (e) { 
       
       dispatch(
         error({
@@ -71,8 +70,7 @@ const CreateCategory = () => {
       "/api/v1/admin/getAllBusinessCategorysList"
     );
 
-    
-    console.log(getBusinessCategory);
+     
     
     setBusinessCategory([...getBusinessCategory.data.list])
   }

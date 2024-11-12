@@ -6,7 +6,8 @@ and added many things form category to subcategory and many more
 // 11-11-24 
 to adjust the size of image and making it more clear , 
 
-
+// integrate payment and book order / refund 
+// forgot password , reset password
 
 
 

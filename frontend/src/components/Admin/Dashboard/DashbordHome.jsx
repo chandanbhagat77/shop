@@ -34,15 +34,13 @@ export default function ProductData() {
         `/api/v1/admin/getAllBusinessCategorysList`
       );
 
-   
-      console.log(getBusinessCategory);
+    
       
       setBusinessCategory([...getBusinessCategory.data.list])
       setSelectedValue(`${getBusinessCategory.data.list[0]._id}`)
       // setTools({ sliders : tools.sliders,category : getBusinessCategory.data.list });
       // setStore(wd);
-    } catch (e) {
-      console.log(e);
+    } catch (e) { 
       
       return dispatch(
         error({
@@ -55,8 +53,7 @@ export default function ProductData() {
     try {
       const res = await axios.get(
         `/api/v1/businessCategory/getAnlytics/${selectedValue}`
-      );
-      console.log(res.data);
+      ); 
       
       setProductData([...res?.data?.data]);
     } catch (e) {}

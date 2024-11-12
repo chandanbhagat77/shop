@@ -87,8 +87,7 @@ export default function ProductOrdredList() {
       } else {
         dispatch(error({ message: "failed please try again" }));
       }
-    } catch (e) {
-      console.log(e);
+    } catch (e) { 
 
       dispatch(
         error({ message: e?.response?.data?.message || "Cancellation failed" })

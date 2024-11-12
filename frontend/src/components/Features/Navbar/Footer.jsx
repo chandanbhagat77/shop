@@ -1,16 +1,34 @@
+import { useEffect, useState } from "react";
 import logo from "./../../../assets/logo.png";
 import { FaInstagram, FaFacebookF, FaYoutube } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
+  const [categories, setCategories] = useState([]); 
+  async function getData() {
+    try {
+      const res = await axios.get(
+        `/api/v1/admin/getAllBusinessCategorysList`
+      ); 
+      
+      setCategories([...res?.data?.list]);
+    } catch (e) {}
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <footer className="bg-white text-gray-700 py-12 border-t border-gray-200">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             {/* <h2 className="font-bold text-2xl mb-4 text-gray-900">WILDSQUAT</h2> */}
-            <span className="font-bold  text-gray-800 font-serif first-letter:text-2xl first-letter:font-bold text-2xl ">
-             BHARTI Things
+            <span className="font-bold  text-gray-800 font-serif first-letter:text-2xl first-letter:font-bold text-2xl my-2 ">
+              Bharti Store
             </span>
             <div className="my-2">
               {" "}
@@ -20,7 +38,7 @@ export default function Footer() {
                 className="scale-125 h-20 "
               />
             </div>
-            <h3 className="font-semibold text-lg mb-2">Who we are?</h3>
+            <h3 className="font-semibold text-lg mb-2">About Us..</h3>
             <p className="text-sm leading-relaxed">
               We are a dedicated team of enthusiasts passionate about creating
               high-quality athleisure wear that seamlessly blends style and
@@ -31,36 +49,19 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4">Shop</h3>
             <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="hover:text-blue-900">
-                  New Arrivals 🔥
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-900">
-                  Offers
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-900">
-                  T-shirts
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-900">
-                  Stringers
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-900">
-                  Shorts
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-900">
-                  Innerwear
-                </a>
-              </li>
+              {categories.length > 0 &&
+                categories.map((el) => {
+                  return (
+                    <li key={el._id}>
+                      <Link
+                        to={`/businesscategoryLists/${el._id}`}
+                        className="hover:text-blue-900"
+                      >
+                        {el.name}
+                      </Link>
+                    </li>
+                  );
+                })}
             </ul>
           </div>
           <div className="text-sm">
@@ -91,10 +92,10 @@ export default function Footer() {
             <p className="text-sm mb-4">
               Email Us:{" "}
               <a
-                href="mailto:wildsquat.kk@gmail.com"
+                href="mailto:info@wildsquat.com"
                 className="text-blue-900 hover:underline"
               >
-                wildsquat.kk@gmail.com
+                info@wildsquat.com
               </a>
             </p>
             <div className="flex space-x-4">

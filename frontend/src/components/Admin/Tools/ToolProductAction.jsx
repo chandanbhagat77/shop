@@ -115,7 +115,7 @@ const ToolProductAction = ({ docid }) => {
 
   function handleChangeDiscount(e, id) {
     const { name, value } = e.target;
-    console.log("ID is ", id);
+ 
 
     setDiscountProduct({
       ...discountProduct,

@@ -202,13 +202,11 @@ const CreateProductForm = () => {
         // let wd = wherhouseDetails.data.warehouse.map((el) => {
         //   let obj = { name: el.warehouse_name, id: el.location_id };
         //   return obj;
-        // });
-        console.log(getBusinessCategory);
+        // }); 
         
         setBusinessCategory([...getBusinessCategory.data.list])
         // setStore(wd);
-      } catch (e) {
-        console.log(e);
+      } catch (e) { 
         
         return dispatch(
           error({

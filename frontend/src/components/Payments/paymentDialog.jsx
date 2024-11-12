@@ -123,8 +123,7 @@ const BuyNowPopup = ({ products, onClose, setOrderProcessing }) => {
 
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
-    } catch (e) {
-      console.log(e);
+    } catch (e) { 
 
       dispatch(
         error({

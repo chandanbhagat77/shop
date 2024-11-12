@@ -23,14 +23,13 @@ const AdminLayout = ({children}) => {
     { id: "analytics", label: "Analytics", icon: <FaChartLine /> },
     { id: "tools", label: "Slider,Sub-Category", icon: <FaTools /> },
     { id: "manage-tools", label: "Manage Slider,Sub-Category", icon: <FaCogs /> }, 
-    { id: "businessCategory", label: "Add New Item Category", icon: <FaTools /> },
+    { id: "businessCategory", label: "New Business Type Form", icon: <FaTools /> },
     
   ];
 
   const renderTabContent = (id) => {
     switch (id) {
-      case "products":
-        console.log("NEVIGATING");
+      case "products": 
         
         nevigate("/adminDash/products")
         return

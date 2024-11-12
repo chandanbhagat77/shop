@@ -26,12 +26,10 @@ exports.getNavbarData = catchAsync(async(req,res,next)=>{
     category=category.map(el=>{
 
         let add=innerset.filter(e=>e.businessCategory.toString() == el._id.toString())
-        console.log(add);
-        
+     
         return {...el._doc,subCategory : add};
        
-    })
-console.log("updated",category);
+    }) 
 
     
 
@@ -69,7 +67,7 @@ exports.getCategoryById = catchAsync(async (req, res, next) => {
 exports.getBusinessCategoryFilterList = catchAsync(async (req,res,next)=>{
 
     const businessId = req.params.businessId;
-    console.log(businessId);
+    
     
     const data = await Tool.aggregate([
         {
@@ -90,7 +88,7 @@ exports.getBusinessCategoryFilterList = catchAsync(async (req,res,next)=>{
        
       ]);
       
-    console.log("data is ",data);
+  
     
 
     res.status(200).send({
@@ -105,7 +103,7 @@ exports.getBusinessCategoryFilterList = catchAsync(async (req,res,next)=>{
 exports.getAnalytics = catchAsync(async(req,res,next)=>{
     const id=req.params.id;
     const data=await BusinessCategory.findById(id).select("products").populate("products","viewCount name ");
-    console.log(data);
+ 
     
     const products = data.products
     .sort((a, b) => b.viewCount - a.viewCount)

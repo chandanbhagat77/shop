@@ -51,15 +51,13 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const [categories, setCategories] = useState([]);
-  const { gender } = useSelector((state) => state.auth);
+  const [categories, setCategories] = useState([]); 
 
   async function getData() {
     try {
       const res = await axios.get(
         `/api/v1/businessCategory/getNavbarData`
-      );
-      console.log("res of data is ",res);
+      ); 
       
 
       setCategories([...res?.data?.data]);
@@ -68,7 +66,7 @@ const Navbar = () => {
 
   useEffect(() => {
     getData();
-  }, [gender]);
+  }, []);
 
   return (
     <div className="w-full fixed top-0 z-50 bg-white bg-opacity-85 shadow-lg">

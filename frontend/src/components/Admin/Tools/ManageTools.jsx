@@ -35,8 +35,7 @@ export default function ManageTools() {
       });
 
       setTools({ sliders,category });
-    } catch (e) {
-      console.log(e);
+    } catch (e) { 
       
       dispatch(
         error({ message: e?.response?.data?.msg || "Something went wrong" })
@@ -62,15 +61,12 @@ export default function ManageTools() {
       const getBusinessCategory = await axios.get(
         `/api/v1/admin/getAllBusinessCategorysList`
       );
-
-   
-      console.log(getBusinessCategory);
+ 
       
       setBusinessCategory([...getBusinessCategory.data.list])
       // setTools({ sliders : tools.sliders,category : getBusinessCategory.data.list });
       // setStore(wd);
-    } catch (e) {
-      console.log(e);
+    } catch (e) { 
       
       return dispatch(
         error({

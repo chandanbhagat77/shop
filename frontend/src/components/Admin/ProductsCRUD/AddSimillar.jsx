@@ -11,8 +11,7 @@ const AddSimillar = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const dispatch = useDispatch();
 
-  const addToSelected = (product) => {
-    console.log(product);
+  const addToSelected = (product) => { 
 
     if (selectedProducts.find((el) => el.id == product.id)) {
       dispatch(warning({ message: "Product already added" }));

@@ -7,7 +7,7 @@ import { error } from "../../../redux/slices/errorSlice";
 import LoadingSpinner from "../../common/Spinner";
 import ProductCard from "../Common/Cards/ProductCard";
 import { FaArrowTrendUp } from "react-icons/fa6";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const BulkListLayoutProduct = ({ toolId }) => {
   const dispatch = useDispatch();
@@ -18,16 +18,19 @@ const BulkListLayoutProduct = ({ toolId }) => {
   const navigate = useNavigate();
   const params = useParams();
 
+  const location = useLocation();
+  let state = location?.state?.reset || false;
+
   const fetchProducts = async () => {
     try {
       let res;
       if (toolId) {
         res = await axios.get(
-          `/api/v1/tools/getToolById/${toolId}?populate=products&populateField=name,price,_id,coverImage&populateLimit=6&populatPage=${page}`
+          `/api/v1/tools/getToolById/${toolId}?populate=products&populateField=name,price,_id,discount,coverImage&populateLimit=8&populatPage=${page}`
         );
       } else {
         res = await axios.get(
-          `/api/v1/tools/getToolById/${params.id}?populate=products&populateField=name,price,_id,coverImage&populateLimit=6&populatPage=${page}`
+          `/api/v1/tools/getToolById/${params.id}?populate=products&populateField=name,price,_id,discount,coverImage&populateLimit=8&populatPage=${page}`
         );
       }
 
@@ -40,6 +43,9 @@ const BulkListLayoutProduct = ({ toolId }) => {
       } else {
         setHasMore(false);
       }
+      if (newProducts?.length < 8) {
+        setHasMore(false);
+      }
     } catch (e) {
       dispatch(error({ message: "Failed to load products" }));
     }
@@ -47,18 +53,41 @@ const BulkListLayoutProduct = ({ toolId }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (state) {
+      setPage((page) => page - page);
+      setProducts(() => []);
+    }
+
     fetchProducts();
-  }, [gender]);
+  }, [gender, params.id]);
 
   return (
     <motion.div
-      className="py-2"
+      className="mt-16"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <div className="max-w-7xl mx-auto px-2">
-        
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {!toolId ? (
+          <>
+            <h2 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-500 tracking-tight mb-4 py-2 animate-fadeIn">
+              Explore And get
+            </h2>
+            <h3 className="text-3xl font-semibold text-gray-700 tracking-wider mb-6">
+              Discover Unmatched Elegance
+            </h3>
+          </>
+        ) : (
+          <>
+            <h2 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-500 tracking-tight mb-4 animate-fadeIn">
+              Elevate Your Style
+            </h2>
+            <h3 className="text-3xl font-semibold text-gray-700 tracking-wider mb-6">
+              Discover Unmatched Elegance
+            </h3>
+          </>
+        )}
 
         <InfiniteScroll
           dataLength={products.length}
@@ -66,7 +95,7 @@ const BulkListLayoutProduct = ({ toolId }) => {
           hasMore={hasMore}
           loader={<LoadingSpinner small={true} />}
           endMessage={
-            <div className="text-center text-2xl font-bold mt-4">
+            <div className="text-center text-2xl font-bold mt-20">
               You have seen all products
               <div>
                 <motion.button
@@ -82,7 +111,7 @@ const BulkListLayoutProduct = ({ toolId }) => {
             </div>
           }
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
             {products.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
