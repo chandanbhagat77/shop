@@ -28,6 +28,12 @@ const userSchema = new mongoose.Schema({
         maxLength: 150,
         minLenght: 5
     },
+    addressLine2: {
+        type: String,
+        trim: true,
+        maxLength: [49, "Address Line 2 max 49 characters"],
+        minLenght: 5
+    },
     role: {
         type: String,
         default: "user"

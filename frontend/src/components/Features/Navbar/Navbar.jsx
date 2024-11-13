@@ -8,6 +8,7 @@ import SearchCategoryProductAndItem from "./../../common/SearchCategoryProduct";
 import NavbarActions from "./NavbarAction";
 import logo from "./../../../assets/logo.png";
 import PremiumNavbar from "../Homepage/NavList";
+import url from "../../../assets/url";
 
 const NavItem = ({ category }) => {
   const navigate = useNavigate();
@@ -143,6 +144,8 @@ const Navbar = () => {
 const MobileNavItem = ({ category, setIsMenuOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  console.log("category is ",category);
+  
 
   return (
     <div className="bg-gray-50 rounded-lg shadow-sm mb-2">
@@ -151,7 +154,7 @@ const MobileNavItem = ({ category, setIsMenuOpen }) => {
         className="w-full flex items-center justify-between px-4 py-3 text-left bg-white hover:bg-gray-100 transition-colors duration-200"
       >
         <span className="text-base font-medium text-gray-700">
-          {category.label}
+          {category.name}
         </span>
         <FaChevronDown
           className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
@@ -159,19 +162,26 @@ const MobileNavItem = ({ category, setIsMenuOpen }) => {
           }`}
         />
       </button>
-      {isOpen && category?.products?.length > 0 && (
+      {isOpen && category?.subCategory?.length > 0 && (
         <div className="bg-gray-50 px-4 py-2">
-          {category.products.map((subItem, index) => (
+          {category.subCategory.map((subItem, index) => (
             <div
               key={index}
               onClick={() => {
                 setIsOpen(false);
                 setIsMenuOpen((state) => !state);
-                navigate(`/productDetails/${subItem._id}`);
+                navigate(`/businesscategoryLists/${category._id}`, {
+                  state: { reset: true },
+                })
               }}
-              className="py-2 px-4 hover:bg-gray-100 cursor-pointer rounded-md transition-colors duration-200"
+              className="py-2 px-4 hover:bg-gray-100 cursor-pointer rounded-md transition-colors duration-200 flex space-x-2 items-center"
             >
-              {subItem.name}
+             <img
+                src={`${url}Tools/${subItem.coverImage}`}
+                alt={subItem.label}
+                className="h-16 w-16 object-cover rounded-md shadow-md"
+              />
+              <div>{subItem.label}</div>
             </div>
           ))}
         </div>

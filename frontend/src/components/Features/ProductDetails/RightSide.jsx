@@ -13,12 +13,19 @@ import { MdLocalLaundryService } from "react-icons/md";
 import BuyNowPopup from "../../Payments/paymentDialog";
 import OrderProcessingPage from "../../Instruction/OrderProcessing";
 import { useDispatch, useSelector } from "react-redux";
-import { error, info } from "../../../redux/slices/errorSlice";
+import {
+  error,
+  info,
+  message,
+  warning,
+} from "../../../redux/slices/errorSlice";
 import { addToCart } from "../../../redux/slices/productSlice";
 export default function RightSide({ product }) {
   const dispatch = useDispatch();
   const { msg } = useSelector((state) => state.product);
   const nevigate = useNavigate();
+
+  const { isLoggedIn } = useSelector((state) => state.auth);
   let [orderProcessing, setOrderProcessing] = useState(false);
   const [openSection, setOpenSection] = useState("features");
   const [showPopup, setShowPopup] = useState(false);
@@ -26,13 +33,18 @@ export default function RightSide({ product }) {
     setOpenSection(openSection === section ? null : section);
   };
   async function ATC() {
+    if (!isLoggedIn) {
+      dispatch(info({ message: "Please Login first" }));
+      nevigate("/login");
+      return;
+    }
     try {
-      const res = await dispatch(addToCart(product._id));
+      const res = await dispatch(addToCart(product?._id));
 
       if (addToCart.fulfilled.match(res)) {
         dispatch(info({ message: "product added to cart" }));
       } else {
-        dispatch(error({ message: msg || "failed to add " }));
+        dispatch(warning({ message: "Product already added to your cart" }));
       }
     } catch (e) {
       dispatch(
@@ -78,30 +90,20 @@ export default function RightSide({ product }) {
         />
       )}
 
-      <div className="lg:w-1/3 lg:pl-8">
-        <h1 className="text-3xl font-bold mb-4 text-gray-700 capitalize">
+      <div className="lg:w-1/3 px-2 lg:pl-8">
+        <h1 className="text-3xl font-bold mb-4 text-gray-700 capitalize text-center">
           {product.name}
         </h1>
-        <p className="text-2xl font-semibold mb-4 text-gray-500">
-          {product.price}
+        <p className="text-xl font-semibold mb-4 text-gray-500 text-center">
+          Rs <span className="text-2xl font-bold"> {product.price}</span>
         </p>
-        <p className="mb-4 text-gray-400">{product.shortDescription}</p>
+        <p className="mb-4 text-gray-400">
+          {product.shortDescription.split("$").map((el) => {
+            return <li>{el}</li>;
+          })}
+        </p>
 
-        <div className="mb-4">
-          <h2 className="font-semibold mb-2">Size</h2>
-          {/* <div className="flex space-x-2">
-            {product.sizes.map((size) => (
-              <button
-                key={size.size}
-                className="px-4 py-2 border border-black rounded-md hover:border-indigo-800 transition duration-300"
-              >
-                <span className="text-lg font-semibold text-indigo-800">
-                  {size.size}
-                </span>
-              </button>
-            ))}
-          </div> */}
-        </div>
+    
 
         <div className="flex flex-col space-y-2 mb-4">
           <button
@@ -114,6 +116,11 @@ export default function RightSide({ product }) {
           <button
             className="flex-1 bg-black text-white py-2 px-4 rounded hover:bg-gray-700"
             onClick={() => {
+              if (!isLoggedIn) {
+                dispatch(info({ message: "Please Login first" }));
+                nevigate("/login");
+                return;
+              }
               setShowPopup(true);
             }}
           >
@@ -164,7 +171,11 @@ export default function RightSide({ product }) {
               isOpen={openSection === "shipping"}
               toggle={() => toggleSection("shipping")}
             >
-              <p className="text-gray-700">{product.shippingDetails}</p>
+              <p className="text-gray-700">
+                {product.shippingDetails.split("$").map((el) => {
+                  return <li>{el}</li>;
+                })}
+              </p>
             </AccordionItem>
 
             <AccordionItem
@@ -173,7 +184,11 @@ export default function RightSide({ product }) {
               isOpen={openSection === "returns"}
               toggle={() => toggleSection("returns")}
             >
-              <p className="text-gray-700">{product.returnDetails}</p>
+              <p className="text-gray-700">
+                {product.returnDetails.split("$").map((el) => {
+                  return <li>{el}</li>;
+                })}
+              </p>
             </AccordionItem>
 
             <AccordionItem
@@ -182,7 +197,11 @@ export default function RightSide({ product }) {
               isOpen={openSection === "care"}
               toggle={() => toggleSection("care")}
             >
-              <p className="text-gray-700">{product.careInstructions}</p>
+              <p className="text-gray-700">
+                {product.careInstructions.split("$").map((el) => {
+                  return <li>{el}</li>;
+                })}
+              </p>
             </AccordionItem>
 
             <AccordionItem
@@ -191,7 +210,11 @@ export default function RightSide({ product }) {
               isOpen={openSection === "description"}
               toggle={() => toggleSection("description")}
             >
-              <p className="text-gray-700">{product.longDescription}</p>
+              <p className="text-gray-700">
+                {product.longDescription.split("$").map((el) => {
+                  return <li>{el}</li>;
+                })}
+              </p>
             </AccordionItem>
           </div>
         </div>

@@ -15,6 +15,7 @@ const ProductListing = ({ productId }) => {
   const [page, setPage] = useState(1);
   const [id, setId] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [disableNext,setDisableNext]=useState(false)
 
   useEffect(() => {
     async function getData() {
@@ -23,9 +24,15 @@ const ProductListing = ({ productId }) => {
         const res = await axios.get(
           `/api/v1/product/getAllTrendingProducts/${productId}?populate=products&populateField=name,price,_id,coverImage&populateLimit=6&populatPage=${page}`
         );
-        if (res.data.products === 0) {
-          setPage(1);
+        if (res.data.products.length == 0) {
+          // setPage(1);
+          setDisableNext(true)
           return;
+        }
+        if (res.data.products.length < 6) {
+          // setPage(1);
+          setDisableNext(true)
+       
         }
         setProducts(res?.data?.products);
         setId(res?.data?.id);
@@ -70,7 +77,7 @@ const ProductListing = ({ productId }) => {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-2"
+              className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 lg:gap-2"
             >
               {/* Ensure grid is responsive */}
               {products?.length > 0 &&
@@ -97,6 +104,7 @@ const ProductListing = ({ productId }) => {
             whileHover={{ scale: 1.1, x: 5 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setPage(page + 1)}
+            disabled={disableNext}
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 sm:h-12 sm:w-12 bg-black text-white rounded-full shadow-lg flex items-center justify-center"
           >
             <GrFormNext size={20} />

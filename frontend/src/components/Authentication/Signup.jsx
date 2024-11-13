@@ -16,7 +16,6 @@ import {
 import { SendOtpToUser, signupForm } from "../../redux/slices/authSlice";
 import { error, info, success, warning } from "../../redux/slices/errorSlice";
 import { FaEye } from "react-icons/fa";
-import { FaBagShopping } from "react-icons/fa6";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -34,8 +33,11 @@ const SignUpPage = () => {
     district: "",
     pinCode: "",
     addressLine1: "",
+    addressLine2: "",
     otpId: 0,
+    city: "",
   });
+  const [tick, setTick] = useState(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 
   const handleChange = (e) => {
@@ -60,6 +62,11 @@ const SignUpPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!tick) {
+      return dispatch(
+        warning({ message: "Please accept terms and condition" })
+      );
+    }
     if (Object.values(formData).some((field) => field === "")) {
       return dispatch(warning({ message: "Please enter all the details" }));
     }
@@ -68,6 +75,9 @@ const SignUpPage = () => {
       return dispatch(
         warning({ message: "Please check password and confirm password" })
       );
+    }
+    if (formData.city.length <= 2 || formData.pinCode.length > 15) {
+      return dispatch(warning({ message: "Please enter valid city name" }));
     }
     if (formData.password.length < 8) {
       return dispatch(
@@ -83,9 +93,20 @@ const SignUpPage = () => {
       return dispatch(warning({ message: "Please enter valid pin code" }));
     }
 
-    if (formData.addressLine1.length < 6) {
+    if (formData.addressLine1.length < 6 || formData.addressLine1.length > 45) {
       return dispatch(
-        warning({ message: "Please describe your address in more details" })
+        warning({
+          message:
+            "Please describe your address (address Line 1) in 10 to 40 characters",
+        })
+      );
+    }
+    if (formData.addressLine2.length < 6 || formData.addressLine2.length > 45) {
+      return dispatch(
+        warning({
+          message:
+            "Please describe your address (address Line 2) in 10 to 40 characters",
+        })
       );
     }
     const statusOtp = await dispatch(
@@ -170,12 +191,7 @@ const SignUpPage = () => {
       placeholder: "Phone Number",
       icon: <FiPhone className="w-5 h-5 text-gray-400" />,
     },
-    {
-      name: "country",
-      type: "text",
-      placeholder: "Country",
-      icon: <FiFlag className="w-5 h-5 text-gray-400" />,
-    },
+
     {
       name: "state",
       type: "text",
@@ -186,6 +202,12 @@ const SignUpPage = () => {
       name: "district",
       type: "text",
       placeholder: "District",
+      icon: <FiMapPin className="w-5 h-5 text-gray-400" />,
+    },
+    {
+      name: "city",
+      type: "text",
+      placeholder: "City",
       icon: <FiMapPin className="w-5 h-5 text-gray-400" />,
     },
     {
@@ -200,66 +222,104 @@ const SignUpPage = () => {
       placeholder: "Address Line 1",
       icon: <FiHome className="w-5 h-5 text-gray-400" />,
     },
+    {
+      name: "addressLine2",
+      type: "text",
+      placeholder: "Address Line 2",
+      icon: <FiHome className="w-5 h-5 text-gray-400" />,
+    },
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-700 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-4xl bg-gray-100 shadow-2xl rounded-2xl overflow-hidden capitalize">
-        <div className="px-8 py-12 ">
-          <h2 className="text-3xl font-bold text-center text-gray-700 mb-2 capitalize animate-pulse flex justify-center">
-            {step === 1 ? "Become Member of Shopit" : "Verify OTP"}
-            {step == 1 &&  <FaBagShopping/>}
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-2 lg:px-8">
+      <div className="w-full max-w-4xl bg-gray-200 shadow-2xl rounded-2xl overflow-hidden capitalize">
+        <div className="px-3 lg:px-8 py-12 capitalize">
+          <h2 className="text-3xl font-bold text-center text-gray-700 mb-2 capitalize ">
+            {step === 1 ? "Welcome To Bharti Store" : "Verify OTP"}
           </h2>
-          <p className="text-center text-gray-600 mb-8">
+          <p className="text-center text-gray-900 mb-8 ">
             {step === 1
-              ? "Join  Wildsquat Trends"
-              : "Enter the OTP sent to your email"}
+              ? "Join  Bharti Store"
+              : "Please Enter OTP , sent to your mobile.no"}
           </p>
 
           {step === 1 ? (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {inputFields.map((field) => (
-                  <div key={field.name} className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      {field.icon}
-                    </div>
-                    <input
-                      id={field.name}
-                      name={field.name}
-                      type={
-                        field.type == "password" && show ? "text" : field.type
-                      }
-                      required
-                      className={`block w-full pl-10 pr-3 py-2 rounded-md leading-5 placeholder-gray-500 focus:outline-none  ring-1 sm:text-sm  ${
-                        (field.name == "cnfpassword" ||
-                          field.name == "password") &&
-                        (formData.password !== formData.cnfpassword ||
-                          (formData.password.length < 8 &&
-                            formData.password.length > 0))
-                          ? "ring-red-500 ring-1 focus:ring-red-600"
-                          : "ring-gray-300 focus:ring-gray-800 focus:border-gray-500 "
-                      } `}
-                      placeholder={field.placeholder}
-                      value={formData[field.name]}
-                      onChange={handleChange}
-                      disabled={field.name == "country"}
-                    />
-                    {field.name == "password" && (
-                      <div
-                        className="absolute top-[50%] -translate-y-[50%] end-2"
-                        onClick={() => setShow(!show)}
-                      >
-                        <FaEye className="text-lg" />
+                  <div className={`flex flex-col`} key={field.name}>
+                    <label htmlFor={field.name}>
+                      <span className="text-sm text-gray-700 font-semibold">
+                        {field.placeholder}
+                      </span>
+                    </label>
+                    <div key={field.name} className="relative">
+                      <div className="flex flex-col space-y-1">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          {field.icon}
+                        </div>
+                        <input
+                          id={field.name}
+                          name={field.name}
+                          type={
+                            field.type == "password" && show
+                              ? "text"
+                              : field.type
+                          }
+                          required
+                          className={`block w-full pl-10 pr-3 py-2 rounded-md leading-5 placeholder-gray-500  focus:border-gray-500 ring-1 sm:text-sm transition-all ease-in bg-gray-50  ${
+                            (field.name == "cnfpassword" ||
+                              field.name == "password") &&
+                            (formData.password !== formData.cnfpassword ||
+                              (formData.password.length < 8 &&
+                                formData.password.length > 0))
+                              ? "ring-red-500 ring-1 focus:ring-red-600"
+                              : "ring-1 ring-gray-300 focus-ring-black"
+                          } `}
+                          placeholder={field.placeholder}
+                          value={formData[field.name]}
+                          onChange={handleChange}
+                          disabled={field.name == "country"}
+                        />
                       </div>
-                    )}
+                      {field.name == "password" && (
+                        <div
+                          className="absolute top-[50%] -translate-y-[50%] end-2"
+                          onClick={() => setShow(!show)}
+                        >
+                          <FaEye className="text-lg" />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
+              </div>
+              <div className="flex items-center mt-4">
+                <input
+                  type="checkbox"
+                  id="termsCheckbox"
+                  checked={tick}
+                  onChange={() => {
+                    !tick && window.open("/PrivacyPolicyPage", "_blank");
+                    setTick(!tick);
+                  }}
+                  className="mr-2 h-4 w-4 border-gray-300 rounded"
+                />
+                <label htmlFor="termsCheckbox" className="text-gray-800">
+                  I accept the terms and conditions{" "}
+                  <a
+                    href="/PrivacyPolicyPage"
+                    target="_blank"
+                    className="text-gray-900 underline"
+                  >
+                    click Hear
+                  </a>
+                </label>
               </div>
               <div>
                 <button
                   type="submit"
-                  className="group relative mx-auto flex justify-center py-2 px-20 border border-transparent text-sm font-medium  text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800 rounded-lg"
+                  className="group relative mx-auto flex justify-center py-2 px-20 border border-transparent text-sm font-medium  text-white bg-gray-900 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800 rounded-lg hover:scale-110 transition-all ease-in"
                 >
                   Sign Up
                   <FiArrowRight className="ml-2 -mr-1 h-5 w-5" />
@@ -304,7 +364,7 @@ const SignUpPage = () => {
             Already have an account?{" "}
             <Link
               to="/login"
-              className="font-medium text-gray-600 hover:text-gray-500"
+              className="font-medium text-gray-600 hover:text-gray-500 underline"
             >
               Sign in
             </Link>

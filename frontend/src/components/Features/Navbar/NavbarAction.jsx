@@ -18,7 +18,7 @@ const NavbarActions = ({}) => {
   };
 
   return (
-    <div className="flex items-center space-x-4 text-sm">
+    <div className="flex items-center space-x-4 text-sm mt-2">
       
 
       {/* User Profile/Login Button */}

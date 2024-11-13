@@ -13,6 +13,7 @@ import Product from "../Features/ProductDetails/Product";
 import ProfileOut from "../Features/Profile/ProfileMainBox";
 import BulkListLayoutCategory from "../Features/BulkList/BulkListLayoutCategory";
 import AdminRoutes from "../Admin/AdminRoutes";
+import PrivacyPolicyPage from "../Instruction/PrivatePolicyPage";
 
 export default function AppRoutes() {
   return (
@@ -29,6 +30,8 @@ export default function AppRoutes() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/denide" element={<AccessDeniedPage />} />
+        
+        <Route path="/PrivacyPolicyPage" element={<PrivacyPolicyPage />} />
 
         <Route element={<Authentication allow={["user", "ADMIN"]} />}>
           {" "}
